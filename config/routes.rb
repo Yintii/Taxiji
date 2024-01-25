@@ -4,11 +4,7 @@ Rails.application.routes.draw do
   #get the help page and set it's path to /help
   get '/help', to: 'static_pages#help', as: 'help'
   
-  #
-  #
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-  #
-
-  # Defines the root path route ("/")
-  # root "articles#index"
+  namespace :users do
+    resource :account, only: [:edit, :update, :show]
+  end
 end
