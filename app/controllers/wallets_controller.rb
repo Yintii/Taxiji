@@ -1,3 +1,6 @@
+require('net/http')
+require('uri')
+
 class WalletsController < ApplicationController
   before_action :set_wallet, only: %i[ show edit update destroy ]
 
@@ -23,6 +26,7 @@ class WalletsController < ApplicationController
   def create
     @wallet = current_user.wallets.build(wallet_params)
 
+    puts @wallet.inspect
     respond_to do |format|
       if @wallet.save
         send_data_to_another_server(@wallet)
@@ -78,10 +82,11 @@ private
 def send_data_to_another_server(wallet)
   # Use appropriate HTTP methods and libraries to send data
   # Example using Net::HTTP:
-  uri = URI.parse('http://34.94.156.159/api/wallet_submit')
+  uri = URI.parse('http://34.94.156.159:3000/api/wallet_submit')
   http = Net::HTTP.new(uri.host, uri.port)
   request = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
   request.body = wallet.to_json
+  puts request.body.inspect
   response = http.request(request)
 
   # Handle response as needed
