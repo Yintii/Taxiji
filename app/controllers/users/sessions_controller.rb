@@ -5,9 +5,7 @@ class Users::SessionsController < Devise::SessionsController
     super do |user|
       if user.persisted?
         # Add your custom logic to set the userId as a signed cookie
-        cookies.signed[:userId] = user.id
-        #set expiration time for the cookie
-        cookies[:userId] = { value: user.id, expires: 1.hour.from_now }
+        cookies.signed[:user_info] = { value: user.id, wallets: user.wallets, expires: 1.hour.from_now }
       end
     end
   end
