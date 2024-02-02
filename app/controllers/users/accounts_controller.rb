@@ -3,7 +3,6 @@ class Users::AccountsController < ApplicationController
 
   def show
     @user = current_user
-    cookies.signed[:user_id] = @user.id
   end
 
   def edit 
