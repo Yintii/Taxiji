@@ -8,4 +8,10 @@ Rails.application.routes.draw do
   namespace :users do
     resource :account, only: [:edit, :update, :show]
   end
+
+  namespace :api do
+    namespace :v1 do
+      get '/sign_in', to: 'extension_auth#sign_in'
+    end
+  end
 end
