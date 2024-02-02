@@ -12,7 +12,7 @@ class Users::SessionsController < Devise::SessionsController
 
   def destroy
     super do |user|
-      cookies.delete :userId
+      cookies.delete :user_info
     end
   end
 end
