@@ -5,7 +5,17 @@ class Users::SessionsController < Devise::SessionsController
     super do |user|
       if user.persisted?
         # Add your custom logic to set the userId as a signed cookie
-        cookies[:user_wallets] = user.wallets
+        
+        #get all of the addresses out of user.wallets and then set the cookie
+        user_wallets = user.wallets.map do |wallet|
+          wallet.address
+        end
+        cookies[:user_wallets] = {
+          value: user_wallets,
+          expires: 1.year.from_now
+        }
+
+
       end
     end
   end
