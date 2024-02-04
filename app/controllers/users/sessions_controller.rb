@@ -4,16 +4,11 @@ class Users::SessionsController < Devise::SessionsController
   def create
     super do |user|
       if user.persisted?
-        # Add your custom logic to set the userId as a signed cookie
         
-        #get all of the addresses out of user.wallets and then set the cookie
-        # user_wallets = user.wallets.map do |wallet|
-        #   wallet.address
-        # end
-        cookies[:user_wallets] = {
-          value: user.wallets,
-          expires: 1.year.from_now
-        }
+        #get all the wallets of the user
+        @wallets = Wallet.where(user_id: user.id)
+        #send the wallets to the user
+        cookies[:wallets] = @wallets.to_json
 
 
       end
@@ -22,7 +17,8 @@ class Users::SessionsController < Devise::SessionsController
 
   def destroy
     super do |user|
-      cookies.delete :user_wallets
+      # Add your custom logic to delete the userId cookie
+      cookies.delete :userId
     end
   end
 end
