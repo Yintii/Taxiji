@@ -18,7 +18,7 @@ class Users::SessionsController < Devise::SessionsController
   def destroy
     super do |user|
       # Add your custom logic to delete the userId cookie
-      cookies.delete :userId
+      cookies.delete :wallets
     end
   end
 end
