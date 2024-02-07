@@ -8,16 +8,17 @@
     <p>
       <%= link_to "Show this wallet", wallet %>
     </p>
-    <div class='pending-transactions'>
-      <% if @pending_transactions %>
+
+    <% if @pending_transactions.present? %>
+      <h2>Pending Transactions</h2>
+      <div class="pending-transactions">
         <% @pending_transactions.each do |transaction| %>
           <% if transaction.from === wallet.wallet_address %>
             <%= render transaction %>
           <% end %>
         <% end %>
-      <% end %>
-    </div>
-
+      </div>
+    <% end %>
   <% end %>
 </div>
 
