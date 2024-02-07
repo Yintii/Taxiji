@@ -13,6 +13,9 @@ class WalletsController < ApplicationController
     request = Net::HTTP::Get.new(uri.request_uri)
     response = http.request(request)
     @pending_transactions = JSON.parse(response.body)
+
+    puts "Pending Transactions: " + @pending_transactions.inspect
+
   end
 
   # GET /wallets/1 or /wallets/1.json
