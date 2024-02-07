@@ -9,9 +9,11 @@
       <%= link_to "Show this wallet", wallet %>
     </p>
     <div class='pending-transactions'>
-      <% @pending_transactions.each do |transaction| %>
-        <% if transaction.from === wallet.wallet_address %>
-          <%= render transaction %>
+      <% if @pending_transactions %>
+        <% @pending_transactions.each do |transaction| %>
+          <% if transaction.from === wallet.wallet_address %>
+            <%= render transaction %>
+          <% end %>
         <% end %>
       <% end %>
     </div>
