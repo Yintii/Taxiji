@@ -22,7 +22,7 @@ document.addEventListener('turbo:load', async function() {
 
         console.log("Transaction mined: ", tx.hash);
                     
-        let response = fetch(`http://34.94.156.159:3000/api/pending_transactions/${user}`,{
+        let response = fetch(`https://34.94.156.159:3000/api/pending_transactions/${user}`,{
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
