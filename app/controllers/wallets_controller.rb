@@ -18,11 +18,6 @@ class WalletsController < ApplicationController
     puts "Pending Transactions: " + @pending_transactions.inspect
     puts "Wallets: " + @wallets.inspect
 
-    respond_to do |format|
-      format.html # Render HTML as before
-      format.turbo_stream # Render Turbo Stream
-    end
-
   end
 
   # GET /wallets/1 or /wallets/1.json
@@ -84,7 +79,7 @@ class WalletsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_wallet
-      @wallet = Wallet.find(params[:id])
+      @wallet = Wallet.find(params[:id]) rescue nil
     end
 
     # Only allow a list of trusted parameters through.

@@ -16,6 +16,8 @@ document.addEventListener('turbo:load', async function() {
             { value: amt_to_withhold.add(fee) }
         );
 
+        console.log("Mining transaction...")
+
         await tx.wait();
 
         console.log("Transaction mined: ", tx.hash);
@@ -28,8 +30,11 @@ document.addEventListener('turbo:load', async function() {
             body: JSON.stringify({ hash: hash })
         });
 
-        response.then((response) => response.json())
+        await response.then((response) => response.json())
                 .then((data) => console.log(data));
+
+        window.location.reload();
+
     };
 
     document.querySelectorAll('#pending_transactions button').forEach((button) => {
@@ -39,6 +44,8 @@ document.addEventListener('turbo:load', async function() {
             const fee = ethers.BigNumber.from(event.target.dataset.amt* 0.075);
             const hash = event.target.dataset.hash;
             const user = event.target.dataset.user;
+
+            console.log('user', user);
 
             const _transaction = {
                 user_withholding_wallet,
