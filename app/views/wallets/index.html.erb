@@ -5,28 +5,11 @@
 <div id="wallets">
   <% @wallets.each do |wallet| %>
     <%= render wallet %>
-    <!-- @pending_transactions could be a list, or it could be a object with a message property -->
-    <% if @pending_transactions.is_a?(Hash) && @pending_transactions.key?('message') %>
-      <h3><%= @pending_transactions['message'] %></h3>
-    <% else %>
-      <!-- @pending_transactions is not a message object, proceed with rendering transactions -->
-      <h2>Pending Transactions</h2>
-      <div class="pending-transactions">
-        <% @pending_transactions.each do |transaction| %>
-          <%= render 'transaction', transaction: transaction %>
-          <button
-            data-to="<%= transaction['to'] %>"
-            data-value="<%= transaction['value'] %>"
-          >Withhold Transaction</button>
-        <% end %>
-      </div>
-      <button onclick="withholdAllTransactions(<%= @pending_transactions %>)">Withhold All Transactions</button>
-    <% end %>
+    <%= render partial: 'pending_transactions', locals: { pending_transactions: @pending_transactions} %>
+
     <p>
       <%= link_to "Show this wallet", wallet %>
     </p>
-
-
   <% end %>
 </div>
 

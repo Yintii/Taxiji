@@ -1,0 +1,7 @@
+<div id="pending_transactions">
+  <%# Render your pending transactions here %>
+  <h1>Pending Transactions</h1>
+  <% @pending_transactions.each do |transaction| %>
+    <%= render 'transaction', transaction: transaction %>
+  <% end %>
+</div>

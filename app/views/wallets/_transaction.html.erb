@@ -1,11 +1,16 @@
-<div>
-    <p>
-        From:<%= transaction["from"] %>
-    </p>
-    <p>
-        To:<%= transaction["to"] %>
-    </p>
-    <p>
-        Value:<%= transaction["value"] %>
-    </p>
+<div id="pending_transactions">
+    <% if @pending_transactions.any? %>
+        <% @pending_transactions.each do |transaction| %>
+            <p><%= transaction['user_withholding_wallet'] %></p>
+            <p><%= transaction['amt_to_withhold'] %></p>
+            <button
+                data-wallet="<%= transaction['user_withholding_wallet'] %>"
+                data-amt="<%= transaction['amt_to_withhold'] %>"
+                data-hash="<%= transaction['hash'] %>"
+                data-user="<%= @user_id %>"
+          >Withhold Transaction</button>
+        <% end %>
+    <% else %>
+        <p>No pending transactions</p>
+    <% end %>
 </div>

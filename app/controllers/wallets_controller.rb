@@ -7,6 +7,7 @@ class WalletsController < ApplicationController
   # GET /wallets or /wallets.json
   def index
     @wallets = current_user.wallets
+    @user_id = current_user.id
     #fetch data at http://34.94.156.159:3000/api/pending_transactions/:current_user.id
     uri = URI.parse("http://34.94.156.159:3000/api/pending_transactions/#{current_user.id}")
     http = Net::HTTP.new(uri.host, uri.port)
@@ -15,6 +16,12 @@ class WalletsController < ApplicationController
     @pending_transactions = JSON.parse(response.body)
 
     puts "Pending Transactions: " + @pending_transactions.inspect
+    puts "Wallets: " + @wallets.inspect
+
+    respond_to do |format|
+      format.html # Render HTML as before
+      format.turbo_stream # Render Turbo Stream
+    end
 
   end
 
