@@ -99,13 +99,14 @@ def send_data_to_track_wallet(wallet)
   # Example using Net::HTTP:
   uri = URI.parse('https://server.taxolotl.xyz/api/wallet_submit')
   http = Net::HTTP.new(uri.host, uri.port)
+  http.use_ssl = true
   request = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
   request.body = wallet.to_json
   puts request.body.inspect
   response = http.request(request)
 
   # Handle response as needed
-  puts response.body if response.is_a?(Net::HTTPSuccess)
+  puts response.body
 end
 
 def send_data_to_stop_tracking_wallet(wallet)
@@ -113,11 +114,12 @@ def send_data_to_stop_tracking_wallet(wallet)
   # Example using Net::HTTP:
   uri = URI.parse('https://server.taxolotl.xyz/api/wallet_stop')
   http = Net::HTTP.new(uri.host, uri.port)
+  http.use_ssl = true
   request = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
   request.body = wallet.to_json
   puts request.body.inspect
   response = http.request(request)
 
   # Handle response as needed
-  puts response.body if response.is_a?(Net::HTTPSuccess)
+  puts response.body
 end
