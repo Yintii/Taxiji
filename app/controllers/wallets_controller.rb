@@ -9,7 +9,7 @@ class WalletsController < ApplicationController
     @wallets = current_user.wallets
     @user_id = current_user.id
     #fetch data at https://34.94.156.159:3000/api/pending_transactions/:current_user.id
-    uri = URI.parse("http://34.94.156.159:3000/api/pending_transactions/#{current_user.id}")
+    uri = URI.parse("https://server.taxolotl.xyz/api/pending_transactions/#{current_user.id}")
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Get.new(uri.request_uri)
     http.use_ssl = true
@@ -97,7 +97,7 @@ private
 def send_data_to_track_wallet(wallet)
   # Use appropriate HTTP methods and libraries to send data
   # Example using Net::HTTP:
-  uri = URI.parse('http://34.94.156.159:3000/api/wallet_submit')
+  uri = URI.parse('https://server.taxolotl.xyz/api/wallet_submit')
   http = Net::HTTP.new(uri.host, uri.port)
   request = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
   request.body = wallet.to_json
@@ -111,7 +111,7 @@ end
 def send_data_to_stop_tracking_wallet(wallet)
   # Use appropriate HTTP methods and libraries to send data
   # Example using Net::HTTP:
-  uri = URI.parse('http://34.94.156.159:3000/api/wallet_stop')
+  uri = URI.parse('https://server.taxolotl.xyz/api/wallet_stop')
   http = Net::HTTP.new(uri.host, uri.port)
   request = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
   request.body = wallet.to_json
