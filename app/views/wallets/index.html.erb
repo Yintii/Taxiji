@@ -9,14 +9,20 @@
     <% if @pending_transactions.is_a?(Hash) && @pending_transactions.key?('message') %>
       <h3><%= @pending_transactions['message'] %></h3>
     <% else %>
-      <!-- @pending_transactions is not a message object, proceed with rendering transactions -->
+      <% if wallet.chain === 'Withholding Wallet' %>
+        
+      <% elsif @pending_transactions.any? %>
+            <!-- @pending_transactions is not a message object, proceed with rendering transactions -->
       <h2>Pending Transactions</h2>
       <div class="pending-transactions">
         <% @pending_transactions.each do |transaction| %>
           <%= render 'transaction', transaction: transaction %>
         <% end %>
+        <button onclick="withholdAllTransactions(<%= @pending_transactions %>)">Withhold All Transactions</button>
       </div>
-      <button onclick="withholdAllTransactions(<%= @pending_transactions %>)">Withhold All Transactions</button>
+      <% else %>
+        <h3>No pending transactions</h3>
+      <% end %>
     <% end %>
     <p>
       <%= link_to "Show this wallet", wallet %>

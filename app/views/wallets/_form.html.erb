@@ -21,7 +21,19 @@
     <%= form.text_field :wallet_address %>
   </div>
 
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+    <% if @user && @user.withholding_wallet.nil? %>
+      <div>
+        <%= form.label :chain, style: "display: block" %>
+        <%= form.select :chain, ["Withholding Wallet"] %>
+      </div>
+    <% else %>
+      <div>
+        <%= form.label :chain, style: "display: block" %>
+        <%= form.select :chain, ["Ethereum", "Polygon", "Base", "Arbitrum", "Optimism"] %>
+      </div>
+    <% end %>
+
+    <div>
+      <%= form.submit %>
+    </div>
+  <% end %>

@@ -28,6 +28,8 @@ class WalletsController < ApplicationController
   # GET /wallets/new
   def new
     @wallet = Wallet.new
+    @user = current_user;
+    puts @user.inspect
   end
 
   # GET /wallets/1/edit
@@ -38,16 +40,31 @@ class WalletsController < ApplicationController
   def create
     @wallet = current_user.wallets.build(wallet_params)
 
-    puts @wallet.inspect
-    respond_to do |format|
-      if @wallet.save
-        send_data_to_track_wallet(@wallet)
-
-        format.html { redirect_to wallet_url(@wallet), notice: "Wallet was successfully created." }
-        format.json { render :show, status: :created, location: @wallet }
+    if @wallet.chain == 'Withholding Wallet'
+      current_user.withholding_wallet = @wallet.wallet_address
+      if current_user.save
+        respond_to do |format|
+          #redirect to the new wallet
+          format.html { redirect_to wallet_url(@wallet), notice: "Wallet was successfully created." }
+          format.json { render :show, status: :created, location: @wallet }
+        end
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @wallet.errors, status: :unprocessable_entity }
+        respond_to do |format|
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @wallet.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      respond_to do |format|
+        if @wallet.save
+          send_data_to_track_wallet(@wallet, current_user.withholding_wallet)
+
+          format.html { redirect_to wallet_url(@wallet), notice: "Wallet was successfully created." }
+          format.json { render :show, status: :created, location: @wallet }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @wallet.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -67,6 +84,14 @@ class WalletsController < ApplicationController
 
   # DELETE /wallets/1 or /wallets/1.json
   def destroy
+
+    #if withholding wallet, remove from user
+    if @wallet.wallet_address == current_user.withholding_wallet
+      current_user.withholding_wallet = nil
+      current_user.save
+    end
+
+
     @wallet.destroy
 
     send_data_to_stop_tracking_wallet(@wallet)
@@ -86,7 +111,7 @@ class WalletsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def wallet_params
       puts params.inspect
-      params.require(:wallet).permit(:wallet_name, :wallet_address)
+      params.require(:wallet).permit(:wallet_name, :wallet_address, :chain)
     end
 end
 
@@ -94,14 +119,14 @@ end
 private
 
 
-def send_data_to_track_wallet(wallet)
+def send_data_to_track_wallet(wallet_to_monitor, withholding_wallet)
   # Use appropriate HTTP methods and libraries to send data
   # Example using Net::HTTP:
   uri = URI.parse('https://server.taxolotl.xyz/api/wallet_submit')
   http = Net::HTTP.new(uri.host, uri.port)
   http.use_ssl = true
   request = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
-  request.body = wallet.to_json
+  request.body = { wallet: wallet_to_monitor, withholding_wallet: withholding_wallet }.to_json
   puts request.body.inspect
   response = http.request(request)
 

@@ -1,4 +1,7 @@
 <div id="<%= dom_id wallet %>">
+  <% if wallet.chain == "Withholding Wallet" %>
+    Withholding Wallet: <%= wallet.wallet_address %>
+  <% else %>
   <p>
     <strong>Wallet name:</strong>
     <%= wallet.wallet_name %>
@@ -9,4 +12,5 @@
     <%= wallet.wallet_address %>
   </p>
 
+  <% end %>
 </div>
