@@ -6,6 +6,9 @@ html, body{
   background-color: #F5CFB3 !important;
 }
 
+.nowrap-text{
+  white-space: nowrap;
+}
 #content-wrap{
   padding-right: 0!important;
   padding-left: 0!important;
@@ -28,6 +31,7 @@ nav{
 
 section#intro{
   display: flex;
+  position: relative;
   flex-flow:column nowrap;
   align-items: center;
   justify-content: center;
@@ -35,11 +39,12 @@ section#intro{
   background: (image-url('intro-bg.svg') no-repeat center center/cover);
   margin-top: -66px;
   padding: 5rem 7rem 10rem 7rem;
-  line-height: 0.85;
+
   overflow: visible;
   h1{
-    font-size:140px;
+    font-size:60px;
     color: #E0F5B3 !important;
+    line-height: 0.85;
   }
   button{
     background-color: #9677A1;
@@ -47,8 +52,130 @@ section#intro{
     border: none;
     padding: 1rem;
     font-family: 'Lobster', sans-serif;
-    border-radius: 15px;
-    font-size: 30px;
+    border-radius: 50px;
+    font-size: 16px;
+    margin-top:1rem;
+  }
+  #bitcoin-coin {
+    position: absolute;
+    right: 134px;
+    transform: scale(0.15);
+    top: -195px;
+  }
+  #chainlink-coin {
+    position: absolute;
+    left: 131px;
+    top: 80px;
+    transform: scale(0.15);
+  }
+  #cardano-coin{
+    position: absolute;
+    left: -55px;
+    top: 200px;
+    transform: scale(0.35);
+  }
+  #ether{
+    position: absolute;
+    right: -40px;
+    top: -90px;
+    transform: scale(0.25);
+  }
+  #usdc{
+      position: absolute;
+      right: -54px;
+      top: 244px;
+      transform: scale(0.25);
+  }
+  #monero{
+    position: absolute;
+    right: 89px;
+    top: 241px;
+    transform: scale(0.35);
+  }
+  @media (min-width: 480px){
+    #chainlink-coin {left: -49px;}
+  }
+  @media (min-width: 600px){
+    #bitcoin-coin {
+      right: -145px;
+      top: -185px;
+      transform: scale(0.25);
+    }
+    #ether {
+      right: -72px;
+      top: 12px;
+      transform: scale(0.25);
+    }
+  }
+
+  @media (min-width: 768px){
+    #bitcoin-coin{
+      right:-120px;
+      top:-153px;
+      transform: scale(0.35);
+    }
+    #ether {
+      right: -50px;
+      top: 77px;
+      transform: scale(0.45);
+    }
+    #usdc {
+      right: 91px;
+      top: 267px;
+      transform: scale(0.45);
+    }
+    #monero{
+      right: 432px;
+      top: 249px;
+      transform: scale(0.55);
+    }
+    #chainlink-coin {
+      left: -89px;
+      top: -111px;
+      transform: scale(.45);
+    }
+    #cardano-coin {
+      left: 42px;
+      top: 120px;
+      transform: scale(0.45);
+    }
+  }
+  @media (min-width: 907px){
+    h1.turret-road-bold{
+      width:80%;
+    }
+  }
+  @media (min-width: 970px){
+    #bitcoin-coin {
+      right: -22px;
+      top: -137px;
+      transform: scale(0.45);
+    }
+    #ether {
+      right: 24px;
+      top: 128px;
+      transform: scale(0.5);
+    }
+    #usdc {
+      right: 163px;
+      top: 267px;
+      transform: scale(0.5);
+    }
+    #chainlink-coin {
+      left: -93px;
+      top: -83px;
+      transform: scale(0.55);
+    }
+    #cardano-coin {
+      left: 143px;
+      top: 147px;
+      transform: scale(0.6);
+    }
+    #monero {
+      right: 563px;
+      top: 293px;
+      transform: scale(0.55);
+    }
   }
 }
 
