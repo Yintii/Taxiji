@@ -1,35 +1,14 @@
+<div class="container">
 <p style="color: green"><%= notice %></p>
 
 <h1>Wallets</h1>
+<hr />
 
 <div id="wallets">
   <% @wallets.each do |wallet| %>
     <%= render wallet %>
-    <!-- @pending_transactions could be a list, or it could be a object with a message property -->
-    <% if @pending_transactions.is_a?(Hash) && @pending_transactions.key?('message') %>
-      <h3><%= @pending_transactions['message'] %></h3>
-    <% else %>
-      <% if wallet.chain === 'Withholding Wallet' %>
-        
-      <% elsif @pending_transactions.any? %>
-            <!-- @pending_transactions is not a message object, proceed with rendering transactions -->
-      <h2>Pending Transactions</h2>
-      <div class="pending-transactions">
-        <% @pending_transactions.each do |transaction| %>
-          <%= render 'transaction', transaction: transaction %>
-        <% end %>
-        <button onclick="withholdAllTransactions(<%= @pending_transactions %>)">Withhold All Transactions</button>
-      </div>
-      <% else %>
-        <h3>No pending transactions</h3>
-      <% end %>
-    <% end %>
-    <p>
-      <%= link_to "Show this wallet", wallet %>
-    </p>
-
-
   <% end %>
 </div>
 
 <%= link_to "New wallet", new_wallet_path %>
+</div>

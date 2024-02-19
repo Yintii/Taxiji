@@ -13,27 +13,27 @@
 
   <div>
     <%= form.label :wallet_name, style: "display: block" %>
-    <%= form.text_field :wallet_name %>
+    <%= form.text_field :wallet_name, class: 'form-control' %>
   </div>
 
   <div>
     <%= form.label :wallet_address, style: "display: block" %>
-    <%= form.text_field :wallet_address %>
+    <%= form.text_field :wallet_address, class: 'form-control'  %>
   </div>
 
     <% if @user && @user.withholding_wallet.nil? %>
       <div>
         <%= form.label :chain, style: "display: block" %>
-        <%= form.select :chain, ["Withholding Wallet"] %>
+        <%= form.select :chain, ["Withholding Wallet"], {}, { :class => 'form-select'} %> 
       </div>
     <% else %>
       <div>
         <%= form.label :chain, style: "display: block" %>
-        <%= form.select :chain, ["Ethereum", "Polygon", "Base", "Arbitrum", "Optimism"] %>
+        <%= form.select :chain, ["Ethereum", "Polygon", "Base", "Arbitrum", "Optimism"], {}, { :class => 'form-select'} %>
       </div>
     <% end %>
 
-    <div>
-      <%= form.submit %>
+    <div style="margin-top: 2rem;"> 
+      <%= form.submit "Create Wallet", class: 'form-control' %>
     </div>
   <% end %>

@@ -1,16 +1,20 @@
 <div id="<%= dom_id wallet %>">
   <% if wallet.chain == "Withholding Wallet" %>
-    Withholding Wallet: <%= wallet.wallet_address %>
+    <div id="withholding_wallet" class="wallet row">
+      <h2>Withholding Wallet</h2>
+      <span><%= wallet.wallet_address %></span>
+    </div>
   <% else %>
-  <p>
-    <strong>Wallet name:</strong>
-    <%= wallet.wallet_name %>
-  </p>
-
-  <p>
-    <strong>Wallet address:</strong>
-    <%= wallet.wallet_address %>
-  </p>
-
+    <div id="<%= wallet.chain %>-wallet" class='wallet row'>
+      <div class="col-md-6">
+        <% if wallet.chain == 'Ethereum' %>
+          <%= image_tag "ether-icon.svg", class: "wallet-icon" %>
+        <% end %>
+        <span><%= wallet.wallet_address %></span>
+      </div>
+      <div class="col-md-6 right-side">
+        <%= link_to "Show this wallet", wallet %>
+      </div>
+    </div>
   <% end %>
 </div>

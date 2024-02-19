@@ -28,6 +28,7 @@ nav{
   justify-content: flex-end;
 }
 
+/* Home Page Start */
 
 section#intro{
   display: flex;
@@ -187,7 +188,6 @@ section#video{
     align-items: center;
     justify-content: center;
     text-align: center;
-    color:#9677A1;
     padding:3rem;
     iframe{
       width: 100%;
@@ -216,3 +216,102 @@ section#Our-Mission{
   font-style: normal;
 }
 /* Add custom fonts and styles end */
+
+/* Home Page End */
+
+/* Account Page */
+#account{
+  h1 {
+      font-family: 'Lobster', sans-serif;
+      text-align: center;
+      margin-top: 1rem;
+    }
+  .account-options{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-evenly;
+    text-align: center;
+    width:100%;
+    a{
+      background-color: #9677A1;
+      color: #E0F5B3 !important;
+      border: none;
+      padding: 1rem;
+      border-radius: 50px;
+      font-size: 16px;
+      margin-top:1rem;
+      text-decoration: none;
+      &:hover {
+          background-color: #E0F5B3;
+          color: #9677A1 !important;
+        }
+    }
+  }
+}
+/* Account Page End */
+
+/* Wallets Page Start */
+#withholding_wallet{
+  background-color:#9677A1;
+  color:#E0F5B3;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 15px;
+}
+#wallets{
+  #Ethereum-wallet {
+      background: linear-gradient(178deg, black, white);
+      span {
+          background-color: white;
+          border-radius: 15px;
+          margin: auto;
+          padding: 1rem;
+        }
+  }
+  .wallet{
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 15px;
+    a{
+      padding:1rem;
+      background-color: black;
+      text-decoration: none;
+      color:white;
+      border-radius: 50px;
+    }
+    .right-side{
+      display:flex;
+      flex-flow: row nowrap;
+      justify-content: flex-end;
+      align-items: center;
+    }
+  }
+}
+
+/* Session Pages Start */
+
+.session-form{
+  width:75% !important;
+  border-radius:15px;
+  padding: 1rem;
+  background-color: #9677A1;
+  color:#E0F5B3;
+  h2{
+    font-family: 'Lobster', sans-serif;
+    text-align:center;
+  }
+  form{
+    .field{
+      margin: 0.5rem 0;
+    }
+  }
+  #remember-me {
+    padding: 1rem;
+  }
+  a{
+    margin-top: 0.5rem !important;
+    color: #E0F5B3;
+  }
+}
+/* Session Pages End */
