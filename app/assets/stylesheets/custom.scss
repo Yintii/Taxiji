@@ -1,3 +1,68 @@
+html, body{
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+  font-family: 'Turrent Road', sans-serif;
+  background-color: #F5CFB3 !important;
+}
+
+#content-wrap{
+  padding-right: 0!important;
+  padding-left: 0!important;
+}
+
+nav{
+  background-color: #9677A1;
+  a, button{
+    color: #E0F5B3 !important;
+    font-family: "Lobster", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+}
+
 #navbarNav{
   justify-content: flex-end;
 }
+
+
+section#intro{
+  display: flex;
+  flex-flow:column nowrap;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: (image-url('intro-bg.svg') no-repeat center center/cover);
+  margin-top: -66px;
+  padding: 5rem 7rem 10rem 7rem;
+  line-height: 0.85;
+  overflow: visible;
+  h1{
+    font-size:140px;
+    color: #E0F5B3 !important;
+  }
+  button{
+    background-color: #9677A1;
+    color: #E0F5B3 !important;
+    border: none;
+    padding: 1rem;
+    font-family: 'Lobster', sans-serif;
+    border-radius: 15px;
+    font-size: 30px;
+  }
+}
+
+
+/* Add custom fonts and styles */
+.turret-road-regular {
+  font-family: "Turret Road", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.turret-road-bold {
+  font-family: "Turret Road", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+/* Add custom fonts and styles end */
