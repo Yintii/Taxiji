@@ -56,6 +56,7 @@ section#intro{
     font-size: 16px;
     margin-top:1rem;
   }
+  /* coins responsive styling */
   #bitcoin-coin {
     position: absolute;
     right: 134px;
@@ -107,7 +108,6 @@ section#intro{
       transform: scale(0.25);
     }
   }
-
   @media (min-width: 768px){
     #bitcoin-coin{
       right:-120px;
@@ -177,6 +177,29 @@ section#intro{
       transform: scale(0.55);
     }
   }
+  /* coins responsive styling end */
+}
+
+section#video{
+  .col-md-12{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color:#9677A1;
+    padding:3rem;
+    iframe{
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+
+section#Our-Mission{
+  background: (image-url('our_mission_bg.svg') no-repeat center center/cover);
+  padding: 13rem 0;
+  color:#E0F5B3
 }
 
 
