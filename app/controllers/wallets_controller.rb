@@ -8,6 +8,8 @@ class WalletsController < ApplicationController
   def index
     @wallets = current_user.wallets
     get_pending_transactions(current_user)
+
+    
     #create a hash of the transactions, with the chain as the key
     @pending_transactions_hash = Hash.new
     @pending_transactions.each do |transaction|
