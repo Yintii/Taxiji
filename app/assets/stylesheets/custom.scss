@@ -255,7 +255,20 @@ section#Our-Mission{
 p.wallet-address{
   margin: 1rem 0 !important;
 }
-
+.wallet{
+  position: relative;
+  span.count-notification {
+    background-color: red;
+    color: white;
+    border-radius: 50px;
+    text-align: center;
+    width: unset;
+    position: absolute;
+    padding: 0.5rem;
+    top: -13px;
+    right: -13px;
+  }   
+}
 #withholding_wallet{
   background-color:#9677A1;
   color:#E0F5B3;

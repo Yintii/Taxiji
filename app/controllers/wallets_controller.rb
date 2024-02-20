@@ -10,20 +10,19 @@ class WalletsController < ApplicationController
     get_pending_transactions(current_user)
 
     #if pending transactions = {"message"=>"No pending transactions found for this user"}
-    #then set the pending transactions to an empty array
-    if @pending_transactions["message"] == "No pending transactions found for this user"
-      @pending_transactions = []
-    end
-    
-    #create a hash of the transactions, with the chain as the key
-    @pending_transactions_hash = Hash.new
-    @pending_transactions.each do |transaction|
-      if @pending_transactions_hash[transaction['chain']].nil?
-        @pending_transactions_hash[transaction['chain']] = Array.new
+    if @pending_transactions == {"message"=>"No pending transactions found for this user"}
+      @pending_transactions = nil
+    else    
+      #create a hash of the transactions, with the chain as the key
+      @pending_transactions_hash = Hash.new
+      @pending_transactions.each do |transaction|
+        if @pending_transactions_hash[transaction['chain']].nil?
+          @pending_transactions_hash[transaction['chain']] = Array.new
+        end
+        @pending_transactions_hash[transaction['chain']].push(transaction)
       end
-      @pending_transactions_hash[transaction['chain']].push(transaction)
+      puts "Pending Transactions Hash: " + @pending_transactions_hash.inspect
     end
-    puts "Pending Transactions Hash: " + @pending_transactions_hash.inspect
   end
 
   # GET /wallets/1 or /wallets/1.json

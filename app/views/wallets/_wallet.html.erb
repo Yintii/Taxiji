@@ -7,7 +7,7 @@
   <% else %>
     <div id="<%= wallet.chain %>-wallet" class='wallet row'>
       <% count = pending_transactions_hash[wallet.chain].count rescue 0 %>
-      <span class="badge badge-info"><%= count %></span>
+      <span class="count-notification"><%= count %> Pending Transactions</span>
       <% if wallet.chain == 'Ethereum' %>
         <%= image_tag "ether-icon.svg", class: "wallet-icon" %>
       <% end %>
