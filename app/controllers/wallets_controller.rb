@@ -9,6 +9,11 @@ class WalletsController < ApplicationController
     @wallets = current_user.wallets
     get_pending_transactions(current_user)
 
+    #if pending transactions = {"message"=>"No pending transactions found for this user"}
+    #then set the pending transactions to an empty array
+    if @pending_transactions["message"] == "No pending transactions found for this user"
+      @pending_transactions = []
+    end
     
     #create a hash of the transactions, with the chain as the key
     @pending_transactions_hash = Hash.new
