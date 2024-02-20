@@ -7,30 +7,27 @@ class WalletsController < ApplicationController
   # GET /wallets or /wallets.json
   def index
     @wallets = current_user.wallets
-    @user_id = current_user.id
-
+    get_pending_transactions(current_user)
+    #create a hash of the transactions, with the chain as the key
+    @pending_transactions_hash = Hash.new
+    @pending_transactions.each do |transaction|
+      if @pending_transactions_hash[transaction['chain']].nil?
+        @pending_transactions_hash[transaction['chain']] = Array.new
+      end
+      @pending_transactions_hash[transaction['chain']].push(transaction)
+    end
+    puts "Pending Transactions Hash: " + @pending_transactions_hash.inspect
   end
 
   # GET /wallets/1 or /wallets/1.json
   def show
-    @user_id = current_user.id
-    @user_withholding_wallet = current_user.withholding_wallet
-    #fetch data at https://34.94.156.159:3000/api/pending_transactions/:current_user.id
-    uri = URI.parse("https://server.taxolotl.xyz/api/pending_transactions/#{current_user.id}")
-    http = Net::HTTP.new(uri.host, uri.port)
-    request = Net::HTTP::Get.new(uri.request_uri)
-    http.use_ssl = true
-    response = http.request(request)
-    @pending_transactions = JSON.parse(response.body)
-
-    puts "Pending Transactions: " + @pending_transactions.inspect
+    get_pending_transactions(current_user)
   end
 
   # GET /wallets/new
   def new
     @wallet = Wallet.new
     @user = current_user;
-    puts @user.inspect
   end
 
   # GET /wallets/1/edit
@@ -148,4 +145,17 @@ def send_data_to_stop_tracking_wallet(wallet)
 
   # Handle response as needed
   puts response.body
+end
+
+def get_pending_transactions(current_user)
+    @user_id = current_user.id
+    @user_withholding_wallet = current_user.withholding_wallet
+    uri = URI.parse("https://server.taxolotl.xyz/api/pending_transactions/#{@user_id}")
+    http = Net::HTTP.new(uri.host, uri.port)
+    request = Net::HTTP::Get.new(uri.request_uri)
+    http.use_ssl = true
+    response = http.request(request)
+    @pending_transactions = JSON.parse(response.body)
+
+    puts "Pending Transactions: " + @pending_transactions.inspect
 end

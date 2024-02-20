@@ -2,14 +2,16 @@
   <% if wallet.chain == "Withholding Wallet" %>
     <div id="withholding_wallet" class="wallet row">
       <h2>Withholding Wallet</h2>
-      <span><%= wallet.wallet_address %></span>
+      <p><%= wallet.wallet_address %></p>
     </div>
   <% else %>
     <div id="<%= wallet.chain %>-wallet" class='wallet row'>
+      <% count = pending_transactions_hash[wallet.chain].count %>
+      <span class="badge badge-info"><%= count %></span>
       <% if wallet.chain == 'Ethereum' %>
         <%= image_tag "ether-icon.svg", class: "wallet-icon" %>
       <% end %>
-      <span><%= wallet.wallet_address %></span>
+      <p class="wallet-address"><%= wallet.wallet_address %></p>
       <%= link_to "Show this wallet", wallet %>
     </div>
   <% end %>

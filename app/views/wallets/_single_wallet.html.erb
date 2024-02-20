@@ -3,14 +3,14 @@
         <% if wallet.chain == "Withholding Wallet" %>
         <div id="withholding_wallet" class="wallet row">
             <h2>Withholding Wallet</h2>
-            <span><%= wallet.wallet_address %></span>
+            <p><%= wallet.wallet_address %></p>
         </div>
         <% else %>
             <div id="<%= wallet.chain %>-wallet" class='wallet row'>
                 <% if wallet.chain == 'Ethereum' %>
                     <%= image_tag "ether-icon.svg", class: "wallet-icon" %>
                 <% end %>
-                <span><%= wallet.wallet_address %></span>
+                <p class='wallet-address'><%= wallet.wallet_address %></p>
             </div>
             <div id="pending-transactions">
                 <% if pending_transactions.is_a?(Hash) && pending_transactions.key?("message") %>
@@ -18,8 +18,8 @@
                 <% else %>
                     <% pending_transactions.each do |transaction| %>
                         <div class="transaction">
-                            <p>Hash: <%= transaction["hash"] %></p>
-                            <p>Amount: <%= transaction["amt_to_withhold"] %></p>
+                            <p class="hash">Hash: <%= transaction["hash"] %></p>
+                            <p class="amount">Amount: <%= transaction["amt_to_withhold"] %></p>
                             <button 
                                 class="transaction-button" 
                                 data-hash="<%= transaction["hash"] %>" 

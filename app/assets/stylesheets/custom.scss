@@ -252,13 +252,17 @@ section#Our-Mission{
 /* Account Page End */
 
 /* Wallets Page Start */
+p.wallet-address{
+  margin: 1rem 0 !important;
+}
+
 #withholding_wallet{
   background-color:#9677A1;
   color:#E0F5B3;
   padding: 1rem;
   margin: 1rem;
   border-radius: 15px;
-  span{
+  p{
     text-overflow: ellipsis;
     overflow: hidden;
   }
@@ -268,7 +272,7 @@ section#Our-Mission{
   padding:1rem;
   margin: 1rem;
   border-radius: 15px;
-  span {
+  p {
       background-color: white;
       border-radius: 15px;
       padding: 0.5rem;
@@ -285,6 +289,7 @@ section#Our-Mission{
       padding:1rem;
       background-color: black;
       text-decoration: none;
+      text-align: center;
       color:white;
       border-radius: 50px;
     }
@@ -296,6 +301,25 @@ section#Our-Mission{
     }
   }
 }
+/*Wallet pages end*/
+
+/*Pending Transactions Start*/
+.transaction{
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 15px;
+  background-color: #9677A1;
+  color:#E0F5B3;
+  .hash{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
+  }
+  .amount{
+    font-size: 1.5rem;
+  }
+}
+/*Pending Transactions End*/
 
 /* Session Pages Start */
 
