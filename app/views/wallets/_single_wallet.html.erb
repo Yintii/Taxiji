@@ -12,21 +12,25 @@
                 <% end %>
                 <span><%= wallet.wallet_address %></span>
             </div>
-            <div class="pending-transactions">
+            <div id="pending-transactions">
                 <% if pending_transactions.is_a?(Hash) && pending_transactions.key?("message") %>
                     <p><%= pending_transactions["message"] %></p>
                 <% else %>
-                <% pending_transactions.each do |transaction| %>
-                    <div class="transaction">
-                        <p>Hash: <%= transaction["hash"] %></p>
-                        <p>User: <%= transaction["user_withholding_wallet"] %></p>
-                        <p>Wallet: <%= transaction["wallet"] %></p>
-                        <p>Amount: <%= transaction["chain"] %></p>
-                        <button class="transaction-button" data-hash="<%= transaction["hash"] %>" data-user="<%= transaction["user"] %>" data-wallet="<%= transaction["wallet"] %>" data-amount="<%= transaction["amt"] %>">Process</button>
-                    </div>
+                    <% pending_transactions.each do |transaction| %>
+                        <div class="transaction">
+                            <p>Hash: <%= transaction["hash"] %></p>
+                            <p>Amount: <%= transaction["amt_to_withhold"] %></p>
+                            <button 
+                                class="transaction-button" 
+                                data-hash="<%= transaction["hash"] %>" 
+                                data-user="<%= @user_id %>" 
+                                data-wallet="<%= @user_withholding_wallet %>" 
+                                data-amt="<%= transaction["amt_to_withhold"] %>">
+                                Process</button>
+                        </div>
+                    <% end %>
+            </div>
                 <% end %>
-                </div>
-            <% end %>
         <% end %>
     </div>
 </div>

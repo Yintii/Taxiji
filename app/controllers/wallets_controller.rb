@@ -14,6 +14,7 @@ class WalletsController < ApplicationController
   # GET /wallets/1 or /wallets/1.json
   def show
     @user_id = current_user.id
+    @user_withholding_wallet = current_user.withholding_wallet
     #fetch data at https://34.94.156.159:3000/api/pending_transactions/:current_user.id
     uri = URI.parse("https://server.taxolotl.xyz/api/pending_transactions/#{current_user.id}")
     http = Net::HTTP.new(uri.host, uri.port)

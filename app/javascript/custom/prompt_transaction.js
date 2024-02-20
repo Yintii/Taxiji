@@ -37,15 +37,18 @@ document.addEventListener('turbo:load', async function() {
 
     };
 
-    document.querySelectorAll('#pending_transactions button').forEach((button) => {
+    document.querySelectorAll('#pending-transactions button').forEach((button) => {
         button.addEventListener('click', async (event) => {
             const user_withholding_wallet = event.target.dataset.wallet;
+            console.log('user_withholding_wallet: ', user_withholding_wallet)
             const amt_to_withhold = ethers.BigNumber.from(event.target.dataset.amt);
+            console.log('amt_to_withhold: ', amt_to_withhold)
             const fee = ethers.BigNumber.from(event.target.dataset.amt* 0.075);
+            console.log('fee: ', fee)
             const hash = event.target.dataset.hash;
+            console.log('hash: ', hash)
             const user = event.target.dataset.user;
-
-            console.log('user', user);
+            console.log('user: ', user)
 
             const _transaction = {
                 user_withholding_wallet,
