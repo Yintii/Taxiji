@@ -258,18 +258,26 @@ section#Our-Mission{
   padding: 1rem;
   margin: 1rem;
   border-radius: 15px;
-}
-#wallets{
-  #Ethereum-wallet {
-      background: linear-gradient(178deg, black, white);
-      span {
-          background-color: white;
-          border-radius: 15px;
-          margin: auto;
-          padding: 1rem;
-        }
+  span{
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
-  .wallet{
+}
+#Ethereum-wallet {
+  background: linear-gradient(178deg, black, white);
+  padding:1rem;
+  margin: 1rem;
+  border-radius: 15px;
+  span {
+      background-color: white;
+      border-radius: 15px;
+      padding: 0.5rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+ #wallets{
+.wallet{
     padding: 1rem;
     margin: 1rem;
     border-radius: 15px;

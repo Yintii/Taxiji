@@ -8,6 +8,12 @@ class WalletsController < ApplicationController
   def index
     @wallets = current_user.wallets
     @user_id = current_user.id
+
+  end
+
+  # GET /wallets/1 or /wallets/1.json
+  def show
+    @user_id = current_user.id
     #fetch data at https://34.94.156.159:3000/api/pending_transactions/:current_user.id
     uri = URI.parse("https://server.taxolotl.xyz/api/pending_transactions/#{current_user.id}")
     http = Net::HTTP.new(uri.host, uri.port)
@@ -17,12 +23,6 @@ class WalletsController < ApplicationController
     @pending_transactions = JSON.parse(response.body)
 
     puts "Pending Transactions: " + @pending_transactions.inspect
-    puts "Wallets: " + @wallets.inspect
-
-  end
-
-  # GET /wallets/1 or /wallets/1.json
-  def show
   end
 
   # GET /wallets/new

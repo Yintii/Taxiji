@@ -6,15 +6,11 @@
     </div>
   <% else %>
     <div id="<%= wallet.chain %>-wallet" class='wallet row'>
-      <div class="col-md-6">
-        <% if wallet.chain == 'Ethereum' %>
-          <%= image_tag "ether-icon.svg", class: "wallet-icon" %>
-        <% end %>
-        <span><%= wallet.wallet_address %></span>
-      </div>
-      <div class="col-md-6 right-side">
-        <%= link_to "Show this wallet", wallet %>
-      </div>
+      <% if wallet.chain == 'Ethereum' %>
+        <%= image_tag "ether-icon.svg", class: "wallet-icon" %>
+      <% end %>
+      <span><%= wallet.wallet_address %></span>
+      <%= link_to "Show this wallet", wallet %>
     </div>
   <% end %>
 </div>

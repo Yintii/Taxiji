@@ -1,0 +1,32 @@
+<div class="container wallet">
+    <div id="<%= dom_id wallet %>">
+        <% if wallet.chain == "Withholding Wallet" %>
+        <div id="withholding_wallet" class="wallet row">
+            <h2>Withholding Wallet</h2>
+            <span><%= wallet.wallet_address %></span>
+        </div>
+        <% else %>
+            <div id="<%= wallet.chain %>-wallet" class='wallet row'>
+                <% if wallet.chain == 'Ethereum' %>
+                    <%= image_tag "ether-icon.svg", class: "wallet-icon" %>
+                <% end %>
+                <span><%= wallet.wallet_address %></span>
+            </div>
+            <div class="pending-transactions">
+                <% if pending_transactions.is_a?(Hash) && pending_transactions.key?("message") %>
+                    <p><%= pending_transactions["message"] %></p>
+                <% else %>
+                <% pending_transactions.each do |transaction| %>
+                    <div class="transaction">
+                        <p>Hash: <%= transaction["hash"] %></p>
+                        <p>User: <%= transaction["user_withholding_wallet"] %></p>
+                        <p>Wallet: <%= transaction["wallet"] %></p>
+                        <p>Amount: <%= transaction["chain"] %></p>
+                        <button class="transaction-button" data-hash="<%= transaction["hash"] %>" data-user="<%= transaction["user"] %>" data-wallet="<%= transaction["wallet"] %>" data-amount="<%= transaction["amt"] %>">Process</button>
+                    </div>
+                <% end %>
+                </div>
+            <% end %>
+        <% end %>
+    </div>
+</div>
