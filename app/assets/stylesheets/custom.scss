@@ -40,7 +40,7 @@ section#intro{
   background: (image-url('intro-bg.svg') no-repeat center center/cover);
   margin-top: -66px;
   padding: 5rem 7rem 10rem 7rem;
-
+  background-position:bottom;
   overflow: visible;
   h1{
     font-size:60px;
@@ -178,6 +178,9 @@ section#intro{
       transform: scale(0.55);
     }
   }
+  @media (min-width: 1077px){
+    
+  }
   /* coins responsive styling end */
 }
 
@@ -197,9 +200,26 @@ section#video{
 }
 
 section#Our-Mission{
-  background: (image-url('our_mission_bg.svg') no-repeat center center/cover);
-  padding: 13rem 0;
-  color:#E0F5B3
+  background: (image-url('WaveBg.svg') no-repeat center center/cover);
+  background-position: top;
+  color:#E0F5B3;
+  padding: 20rem 0;
+  h2{
+    font-size: 75px;
+  }
+  p{
+    font-size: 20px;
+    width:90%;
+    margin: 0 auto;
+  }
+  @media (min-width: 728px){
+    h2{
+      font-size: 100px;
+    }
+    p{
+      font-size: 30px;
+    }
+  }
 }
 
 
