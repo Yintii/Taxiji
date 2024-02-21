@@ -179,7 +179,18 @@ section#intro{
     }
   }
   @media (min-width: 1077px){
-    
+    h1.turret-road-bold{
+      width:50%; 
+    }
+    #monero{
+      top: 200px;
+    }
+  }
+  @media (min-width: 1568px) {
+    #monero {
+      right: 852px;
+      top: 160px;
+    }
   }
   /* coins responsive styling end */
 }
