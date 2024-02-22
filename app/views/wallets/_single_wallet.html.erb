@@ -29,7 +29,8 @@
                                 data-hash="<%= transaction["hash"] %>" 
                                 data-user="<%= @user_id %>" 
                                 data-wallet="<%= @user_withholding_wallet %>" 
-                                data-amt="<%= transaction["amt_to_withhold"] %>">
+                                data-amt="<%= transaction["amt_to_withhold"] %>"
+                                data-percentage="<%= @wallet.percentage %>">
                                 Process</button>
                         </div>
                     <% end %>

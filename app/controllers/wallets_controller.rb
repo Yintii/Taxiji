@@ -28,6 +28,8 @@ class WalletsController < ApplicationController
   # GET /wallets/1 or /wallets/1.json
   def show
     get_pending_transactions(current_user)
+    @wallet = Wallet.find(params[:id])
+    puts "Wallet: " + @wallet.inspect
   end
 
   # GET /wallets/new
@@ -115,7 +117,7 @@ class WalletsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def wallet_params
       puts params.inspect
-      params.require(:wallet).permit(:wallet_name, :wallet_address, :chain)
+      params.require(:wallet).permit(:wallet_name, :wallet_address, :chain, :percentage)
     end
 end
 
