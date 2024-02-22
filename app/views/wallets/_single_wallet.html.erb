@@ -8,6 +8,7 @@
         <% else %>
             <div id="<%= wallet.chain %>-wallet" class='wallet row'>
                 <% if wallet.chain == 'Ethereum' %>
+                    
                     <%= image_tag "ether-icon.svg", class: "wallet-icon" %>
                 <% end %>
                 <p class='wallet-address'><%= wallet.wallet_address %></p>

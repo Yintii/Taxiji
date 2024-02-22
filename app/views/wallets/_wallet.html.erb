@@ -8,11 +8,19 @@
     <div id="<%= wallet.chain %>-wallet" class='wallet row'>
       <% count = pending_transactions_hash[wallet.chain].count rescue 0 %>
       <span class="count-notification"><%= count %> Pending Transactions</span>
-      <% if wallet.chain == 'Ethereum' %>
-        <%= image_tag "ether-icon.svg", class: "wallet-icon" %>
-      <% end %>
-      <p class="wallet-address"><%= wallet.wallet_address %></p>
+      <div class='col-lg-6 col-md-12'>
+        <div class='chain-id'>
+          <% if wallet.chain == 'Ethereum' %>
+            <%= image_tag "ether-icon.svg", class: "wallet-icon" %>
+          <% end %>
+          <h2><%= wallet.chain %> Wallet</h2>
+        </div>
+        <p class="wallet-address"><%= wallet.wallet_address %></p>
+      </div>
+      
+      <div class='col-lg-6 col-md-12'>
       <%= link_to "Show this wallet", wallet %>
+      </div>
     </div>
   <% end %>
 </div>

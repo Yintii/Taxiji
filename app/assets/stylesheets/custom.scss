@@ -325,10 +325,30 @@ p.wallet-address{
     }
   }
  #wallets{
-.wallet{
+  .wallet{
+    display: flex;
+    flex-flow: row wrap;
     padding: 1rem;
     margin: 1rem;
     border-radius: 15px;
+    align-items: center;
+    .chain-id{
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+    h2:not(:first-child){
+      background-color: white;
+      padding:0.5rem;
+      display: inline;
+      border-radius: 15px;
+      white-space: nowrap;
+    }
+    @media (max-width:475px) {
+      h2:not(:first-child){
+        display: none;
+      }
+    }
     a{
       padding:1rem;
       background-color: black;
@@ -336,12 +356,8 @@ p.wallet-address{
       text-align: center;
       color:white;
       border-radius: 50px;
-    }
-    .right-side{
-      display:flex;
-      flex-flow: row nowrap;
-      justify-content: flex-end;
-      align-items: center;
+      display: flex;
+      justify-content: center;
     }
   }
 }
