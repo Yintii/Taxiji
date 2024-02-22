@@ -3,6 +3,8 @@
     <div id="withholding_wallet" class="wallet row">
       <h2>Withholding Wallet</h2>
       <p><%= wallet.wallet_address %></p>
+      <%= link_to "Show this wallet", wallet %>
+
     </div>
   <% else %>
     <div id="<%= wallet.chain %>-wallet" class='wallet row'>

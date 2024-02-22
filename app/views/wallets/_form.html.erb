@@ -32,11 +32,15 @@
         <%= form.select :chain, ["Ethereum", "Polygon", "Base", "Arbitrum", "Optimism"], {}, { :class => 'form-select'} %>
       </div>
     <% end %>
-    <div>
-      <%= form.label :percentage, style: "display: block" %>
-      <%= form.range_field :percentage, in: 10..50, class: 'form-range', id: 'withhold-percentage', value: 10 %>
+
+    <% if @user && @user.withholding_wallet %>
+      <div>
+        <%= form.label :percentage, style: "display: block" %>
+        <%= form.range_field :percentage, in: 10..50, class: 'form-range', id: 'withhold-percentage', value: 10 %>
       <span id="withhold-percentage-value">10%</span>
     </div>
+    <% end %>
+
     <div style="margin-top: 2rem;"> 
       <%= form.submit "Create Wallet", class: 'form-control' %>
     </div>

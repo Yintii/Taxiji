@@ -58,8 +58,7 @@ document.addEventListener('turbo:load', async function() {
                 amt_to_withhold,
                 fee,
                 hash,
-                user,
-                percentage
+                user
             };
             withholdSingleTransaction(_transaction);
         });
