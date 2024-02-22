@@ -1,8 +1,8 @@
 <div class="container wallet">
   <%= render partial: 'single_wallet', locals: { wallet: @wallet, pending_transactions: @pending_transactions } %>
 
-  <div>
-    <%= link_to "Edit this wallet", edit_wallet_path(@wallet) %> |
+  <div class="wallet-options">
+    <%= link_to "Edit this wallet", edit_wallet_path(@wallet) %>
     <%= link_to "Back to wallets", wallets_path %>
 
     <%= button_to "Destroy this wallet", @wallet, method: :delete %>

@@ -6,12 +6,15 @@
             <p><%= wallet.wallet_address %></p>
         </div>
         <% else %>
-            <div id="<%= wallet.chain %>-wallet" class='wallet row'>
-                <% if wallet.chain == 'Ethereum' %>
-                    
-                    <%= image_tag "ether-icon.svg", class: "wallet-icon" %>
-                <% end %>
-                <p class='wallet-address'><%= wallet.wallet_address %></p>
+            <div id="<%= wallet.chain %>-wallet" class='single-wallet row'>
+                <div class="col-lg-6 col-md-12">
+                    <% if wallet.chain == 'Ethereum' %>
+                        <%= image_tag "ether-icon.svg", class: "wallet-icon" %>
+                    <% end %>
+                </div>
+                <div class='col-lg-6 col-md-12'>
+                    <p class='wallet-address'><%= wallet.wallet_address %></p>
+                </div>
             </div>
             <div id="pending-transactions">
                 <% if pending_transactions.is_a?(Hash) && pending_transactions.key?("message") %>

@@ -298,7 +298,27 @@ p.wallet-address{
     padding: 0.5rem;
     top: -13px;
     right: -13px;
-  }   
+  }
+  .wallet-options{
+    padding:1rem;
+    margin:1rem;
+    display: flex;
+    justify-content: space-around;
+    a, button{
+      background-color: #9677A1;
+      color: #E0F5B3 !important;
+      border: none;
+      padding: 1rem;
+      border-radius: 50px;
+      font-size: 16px;
+      margin-top:1rem;
+      text-decoration: none;
+      &:hover {
+          background-color: #E0F5B3;
+          color: #9677A1 !important;
+        }
+    }
+  }
 }
 #withholding_wallet{
   background-color:#9677A1;
@@ -364,19 +384,27 @@ p.wallet-address{
 /*Wallet pages end*/
 
 /*Pending Transactions Start*/
-.transaction{
+#pending-transactions {
+  width: 75%;
+  margin: 0 auto;
+  background-color: white;
   padding: 1rem;
-  margin: 1rem;
   border-radius: 15px;
-  background-color: #9677A1;
-  color:#E0F5B3;
-  .hash{
-    text-overflow: ellipsis;
-    overflow: hidden;
-    display: block;
-  }
-  .amount{
-    font-size: 1.5rem;
+  box-shadow: 4px 5px 24px #eee;
+  .transaction{
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 15px;
+    background-color: #9677A1;
+    color:#E0F5B3;
+    .hash{
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: block;
+    }
+    .amount{
+      font-size: 1.5rem;
+    }
   }
 }
 /*Pending Transactions End*/
