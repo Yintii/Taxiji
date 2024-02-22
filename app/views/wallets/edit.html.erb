@@ -1,7 +1,11 @@
 <div class="container session-form">
   <h2>Editing wallet</h2>
 
-  <%= render "form", wallet: @wallet %>
+  <% if @wallet.chain == 'Withholding Wallet' %>
+    <%= render "withholding_edit_form", wallet: @wallet %>
+  <% else %>
+    <%= render "edit_form", wallet: @wallet %>
+  <% end %>
 
   <br>
 

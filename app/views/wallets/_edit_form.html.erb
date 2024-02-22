@@ -1,0 +1,47 @@
+<%= form_with(model: wallet) do |form| %>
+  <% if wallet.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(wallet.errors.count, "error") %> prohibited this wallet from being saved:</h2>
+
+      <ul>
+        <% wallet.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :wallet_name, style: "display: block" %>
+    <%= form.text_field :wallet_name, class: 'form-control' %>
+  </div>
+
+  <div>
+    <%= form.label :wallet_address, style: "display: block" %>
+    <%= form.text_field :wallet_address, class: 'form-control'  %>
+  </div>
+
+    <% if @user && @user.withholding_wallet.nil? %>
+      <div>
+        <%= form.label :chain, style: "display: block" %>
+        <%= form.select :chain, ["Withholding Wallet"], {}, { :class => 'form-select'} %> 
+      </div>
+    <% else %>
+      <div>
+        <%= form.label :chain, style: "display: block" %>
+        <%= form.select :chain, ["Ethereum", "Polygon", "Base", "Arbitrum", "Optimism"], {}, { :class => 'form-select'} %>
+      </div>
+    <% end %>
+
+
+      <div>
+        <%= form.label :percentage, style: "display: block" %>
+        <%= form.range_field :percentage, in: 10..50, class: 'form-range', id: 'withhold-percentage', value: wallet.percentage %>
+      <span id="withhold-percentage-value"></span>
+    </div>
+
+
+    <div style="margin-top: 2rem;"> 
+      <%= form.submit "Update Wallet", class: 'form-control' %>
+    </div>
+  <% end %>
