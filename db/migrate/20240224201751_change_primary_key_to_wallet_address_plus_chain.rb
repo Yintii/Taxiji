@@ -10,6 +10,7 @@ class ChangePrimaryKeyToWalletAddressPlusChain < ActiveRecord::Migration[7.0]
 
     # Remove the existing primary key constraint
     remove_column :wallets, :wallet_address
+    remove_column :wallets, :chain
 
     # Make the new column the primary key
     change_column :wallets, :composite_key, :string, primary_key: true
@@ -18,6 +19,7 @@ class ChangePrimaryKeyToWalletAddressPlusChain < ActiveRecord::Migration[7.0]
   def down
     # Re-add the wallet_address column
     add_column :wallets, :wallet_address, :string
+    add_column :wallets, :chain, :string
 
     # Split the composite_key to extract wallet_address and chain
     Wallet.all.each do |wallet|
