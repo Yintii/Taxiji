@@ -24,7 +24,7 @@
     <% if @user && @user.withholding_wallet.nil? %>
       <div>
         <%= form.label :chain, style: "display: block" %>
-        <%= form.select :chain, ["Withholding Wallet"], {}, { :class => 'form-select'} %> 
+        <%= form.select :chain, ["Withholding"], {}, { :class => 'form-select'} %> 
       </div>
     <% else %>
       <div>
