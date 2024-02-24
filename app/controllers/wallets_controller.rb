@@ -53,7 +53,7 @@ class WalletsController < ApplicationController
     #called composite_key, which is the concatenation of the wallet_address and chain
     @wallet.composite_key = @wallet.wallet_address + @wallet.chain
 
-    puts "Wallet: " + @wallet.inspect
+    puts "Wallet with composite: " + @wallet.inspect
 
     if @wallet.chain == 'Withholding Wallet'
       current_user.withholding_wallet = @wallet.wallet_address
