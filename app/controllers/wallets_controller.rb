@@ -55,6 +55,10 @@ class WalletsController < ApplicationController
 
     puts "Wallet with composite: " + @wallet.inspect
 
+    puts "Wallets primary key: " + @wallet.id.inspect
+    
+
+
     if @wallet.chain == 'Withholding Wallet'
       current_user.withholding_wallet = @wallet.wallet_address
       if current_user.save
