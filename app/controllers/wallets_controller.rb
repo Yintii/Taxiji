@@ -46,6 +46,15 @@ class WalletsController < ApplicationController
   def create
     @wallet = current_user.wallets.build(wallet_params)
 
+    puts "Wallet Params: " + wallet_params.inspect
+    puts "Wallet: " + @wallet.inspect
+
+    #take the wallet_address and chain from wallet_params and append a new paramater
+    #called composite_key, which is the concatenation of the wallet_address and chain
+    @wallet.composite_key = @wallet.wallet_address + @wallet.chain
+
+    puts "Wallet: " + @wallet.inspect
+
     if @wallet.chain == 'Withholding Wallet'
       current_user.withholding_wallet = @wallet.wallet_address
       if current_user.save

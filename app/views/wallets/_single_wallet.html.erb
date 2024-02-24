@@ -1,15 +1,17 @@
 <div class="container wallet">
     <div id="<%= dom_id wallet %>">
         <% if wallet.chain == "Withholding Wallet" %>
-        <div id="withholding_wallet" class="wallet row">
-            <h2>Withholding Wallet</h2>
-            <p><%= wallet.wallet_address %></p>
-        </div>
+            <div id="withholding_wallet" class="wallet row">
+                <h2>Withholding Wallet</h2>
+                <p><%= wallet.wallet_address %></p>
+            </div>
         <% else %>
             <div id="<%= wallet.chain %>-wallet" class='single-wallet row'>
                 <div class="col-lg-6 col-md-12">
                     <% if wallet.chain == 'Ethereum' %>
                         <%= image_tag "ether-icon.svg", class: "wallet-icon" %>
+                    <% elsif wallet.chain == "Polygon" %>
+                        <%= image_tag "matic-icon.svg", class: "wallet-icon" %>
                     <% end %>
                 </div>
                 <div class='col-lg-6 col-md-12'>
@@ -21,7 +23,8 @@
                     <p>No pending transactions</p>
                 <% else %>
                     <% pending_transactions.each do |transaction| %>
-                        <div class="transaction">
+                        <% if transaction["chain"] == wallet.chain %>
+                            <div class="transaction">
                             <p class="hash">Hash: <%= transaction["hash"] %></p>
                             <p class="amount">Amount: <%= transaction["amt_to_withhold"] %></p>
                             <button 
@@ -33,9 +36,10 @@
                                 data-percentage="<%= @wallet.percentage %>">
                                 Process</button>
                         </div>
+                        <% end %>
                     <% end %>
-            </div>
                 <% end %>
+            </div>
         <% end %>
     </div>
 </div>

@@ -331,8 +331,8 @@ p.wallet-address{
     overflow: hidden;
   }
 }
-#Ethereum-wallet {
-  background: linear-gradient(178deg, black, white);
+#Ethereum-wallet,
+#Polygon-wallet {
   padding:1rem;
   margin: 1rem;
   border-radius: 15px;
@@ -343,7 +343,13 @@ p.wallet-address{
       text-overflow: ellipsis;
       overflow: hidden;
     }
-  }
+}
+#Ethereum-wallet {
+  background: linear-gradient(178deg, black, white);
+}
+#Polygon-wallet{
+  background: linear-gradient(178deg, #8247E5, white);
+}
  #wallets{
   .wallet{
     display: flex;
