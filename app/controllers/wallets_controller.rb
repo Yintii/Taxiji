@@ -56,9 +56,8 @@ class WalletsController < ApplicationController
     puts "Wallet with composite: " + @wallet.inspect
 
     #ensure that the wallet id is set to the composite_key
-    @wallet.id = @wallet.composite_key
 
-    puts "Wallet with id: " + @wallet.id.inspect
+    puts "Wallet has id: " + @wallet.id.inspect
 
 
 
