@@ -51,12 +51,10 @@ class WalletsController < ApplicationController
 
     #take the wallet_address and chain from wallet_params and append a new paramater
     #called composite_key, which is the concatenation of the wallet_address and chain
-    @wallet.composite_key = @wallet.wallet_address + "_" + @wallet.chain
+    @wallet.composite_key = @wallet.wallet_address.downcase + "-" + @wallet.chain.downcase
 
     puts "Wallet with composite: " + @wallet.inspect
-
     #ensure that the wallet id is set to the composite_key
-
     puts "Wallet has id: " + @wallet.id.inspect
 
 

@@ -5,7 +5,7 @@ class ChangePrimaryKeyToWalletAddressPlusChain < ActiveRecord::Migration[7.0]
 
     # Populate the new column with the combination of wallet_address and chain
     Wallet.all.each do |wallet|
-      wallet.update(composite_key: "#{wallet.wallet_address}_#{wallet.chain}")
+      wallet.update(composite_key: "#{wallet.wallet_address.downcase}-#{wallet.chain.downcase}")
     end
 
     # Remove the existing primary key constraint
