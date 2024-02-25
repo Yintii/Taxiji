@@ -332,10 +332,17 @@ p.wallet-address{
   }
 }
 #Ethereum-wallet,
-#Polygon-wallet {
+#Polygon-wallet,
+#Optimism-wallet,
+#Arbitrum-wallet,
+#Base-wallet {
   padding:1rem;
   margin: 1rem;
   border-radius: 15px;
+  .wallet-icon{
+    height:120px;
+    width:120px;
+  }
   p {
       background-color: white;
       border-radius: 15px;
@@ -349,6 +356,15 @@ p.wallet-address{
 }
 #Polygon-wallet{
   background: linear-gradient(178deg, #8247E5, white);
+}
+#Optimism-wallet{
+  background: linear-gradient(178deg, #cb0000, white);
+}
+#Arbitrum-wallet{
+  background: linear-gradient(178deg, #00a3ff, white);
+}
+#Base-wallet{
+  background: linear-gradient(178deg, #015586, white);
 }
  #wallets{
   .wallet{

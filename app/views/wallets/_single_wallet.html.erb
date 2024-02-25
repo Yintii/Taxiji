@@ -12,6 +12,12 @@
                         <%= image_tag "ether-icon.svg", class: "wallet-icon" %>
                     <% elsif wallet.chain == "Polygon" %>
                         <%= image_tag "matic-icon.svg", class: "wallet-icon" %>
+                    <% elsif wallet.chain == 'Optimism' %>
+                        <%= image_tag "optimism-icon.svg", class: "wallet-icon" %>
+                    <% elsif wallet.chain == 'Arbitrum' %>
+                        <%= image_tag "arbitrum-icon.svg", class: "wallet-icon" %>
+                    <% elsif wallet.chain == 'Base' %>
+                        <%= image_tag "base-icon.svg", class: "wallet-icon" %>
                     <% end %>
                 </div>
                 <div class='col-lg-6 col-md-12'>
