@@ -1,0 +1,6 @@
+<%= turbo_stream.prepend "wallets" do %>
+    <%= render "wallet", wallet: @wallet %>
+<% end %>
+<%= turbo_stream.replace "#{dom_id(Wallet.new)}_form" do %>
+    <%= render "form", wallet: Wallet.new, user: @user %>
+<% end %>

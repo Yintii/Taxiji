@@ -1,4 +1,4 @@
-<%= form_with(model: wallet) do |form| %>
+<%= form_with(model: wallet, id: "#{dom_id(wallet)}_form", class: 'd-none') do |form| %>
   <% if wallet.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(wallet.errors.count, "error") %> prohibited this wallet from being saved:</h2>

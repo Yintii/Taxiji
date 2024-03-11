@@ -61,6 +61,14 @@ Rails.application.configure do
   config.assets.quiet = true
 
   config.assets.compile = true
+
+  config.sass.inline_source_maps = true
+
+  config.assets.cache_store = :null_store
+
+  config.sass.cache false
+
+  config.assets.compress = false
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 

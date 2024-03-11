@@ -283,6 +283,19 @@ section#Our-Mission{
 /* Account Page End */
 
 /* Wallets Page Start */
+#new-wallet-form {
+  h2{
+    &:hover{
+      color:white;
+      cursor: pointer;
+    }
+  }
+  form{
+    display: none;
+  }
+}
+
+
 p.wallet-address{
   margin: 1rem 0 !important;
 }

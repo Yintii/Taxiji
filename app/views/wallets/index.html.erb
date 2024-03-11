@@ -4,11 +4,18 @@
 <h1>Wallets</h1>
 <hr />
 
+<div id="new-wallet-form" class="container session-form">
+  <h2>Create New Wallet</h2>
+  <%= render 'form', wallet: Wallet.new, user: @user %>
+</div>
+
+
 <div id="wallets">
   <% @wallets.each do |wallet| %>
     <%= render wallet, pending_transactions_hash: @pending_transactions_hash %>
   <% end %>
 </div>
 
-<%= link_to "New wallet", new_wallet_path %>
+
+
 </div>

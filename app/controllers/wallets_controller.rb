@@ -7,22 +7,22 @@ class WalletsController < ApplicationController
   # GET /wallets or /wallets.json
   def index
     @wallets = current_user.wallets
-    get_pending_transactions(current_user)
+    @user = current_user
+    get_pending_transactions(@user)
 
-    #if pending transactions = {"message"=>"No pending transactions found for this user"}
-    if @pending_transactions == {"message"=>"No pending transactions found for this user"}
-      @pending_transactions = nil
-    else    
-      #create a hash of the transactions, with the chain as the key
-      @pending_transactions_hash = Hash.new
-      @pending_transactions.each do |transaction|
-        if @pending_transactions_hash[transaction['chain']].nil?
-          @pending_transactions_hash[transaction['chain']] = Array.new
+      if @pending_transactions == {"message"=>"No pending transactions found for this user"}
+        @pending_transactions = nil
+      else    
+        #create a hash of the transactions, with the chain as the key
+        @pending_transactions_hash = Hash.new
+        @pending_transactions.each do |transaction|
+          if @pending_transactions_hash[transaction['chain']].nil?
+            @pending_transactions_hash[transaction['chain']] = Array.new
+          end
+          @pending_transactions_hash[transaction['chain']].push(transaction)
         end
-        @pending_transactions_hash[transaction['chain']].push(transaction)
+        puts "Pending Transactions Hash: " + @pending_transactions_hash.inspect
       end
-      puts "Pending Transactions Hash: " + @pending_transactions_hash.inspect
-    end
   end
 
   # GET /wallets/1 or /wallets/1.json
@@ -46,18 +46,13 @@ class WalletsController < ApplicationController
   def create
     @wallet = current_user.wallets.build(wallet_params)
 
-    puts "Wallet Params: " + wallet_params.inspect
-    puts "Wallet: " + @wallet.inspect
-
-    puts "Wallet id: " + @wallet.id.inspect
-
-
 
     if @wallet.chain == 'Withholding'
       current_user.withholding_wallet = @wallet.wallet_address
       if current_user.save
         respond_to do |format|
           #redirect to the new wallet
+          format.turbo_stream
           format.html { redirect_to wallet_url(@wallet), notice: "Wallet was successfully created." }
           format.json { render :show, status: :created, location: @wallet }
         end
@@ -71,7 +66,7 @@ class WalletsController < ApplicationController
       respond_to do |format|
         if @wallet.save
           send_data_to_track_wallet(@wallet, current_user.withholding_wallet)
-
+          format.turbo_stream
           format.html { redirect_to wallet_url(@wallet), notice: "Wallet was successfully created." }
           format.json { render :show, status: :created, location: @wallet }
         else
