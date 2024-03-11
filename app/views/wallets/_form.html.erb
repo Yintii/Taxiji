@@ -33,12 +33,14 @@
       </div>
     <% end %>
 
-    <% if @user && @user.withholding_wallet %>
+    <% if @user && @user.withholding_wallet.nil? %>
+      <div></div>
+    <% else %>
       <div>
-        <%= form.label :percentage, style: "display: block" %>
-        <%= form.range_field :percentage, in: 10..50, class: 'form-range', id: 'withhold-percentage', value: 10 %>
-      <span id="withhold-percentage-value">10%</span>
-    </div>
+          <%= form.label :percentage, style: "display: block" %>
+          <%= form.range_field :percentage, in: 10..50, class: 'form-range', id: 'withhold-percentage', value: 10 %>
+        <span id="withhold-percentage-value">10%</span>
+      </div>
     <% end %>
 
     <div style="margin-top: 2rem;"> 
