@@ -4,6 +4,7 @@ require('uri')
 class WalletsController < ApplicationController
   before_action :set_wallet, only: %i[ show edit update destroy ]
 
+
   # GET /wallets or /wallets.json
   def index
     @wallets = current_user.wallets
@@ -130,9 +131,9 @@ private
 def send_data_to_track_wallet(wallet_to_monitor, withholding_wallet)
   # Use appropriate HTTP methods and libraries to send data
   # Example using Net::HTTP:
-  uri = URI.parse('https://server.taxolotl.xyz/api/wallet_submit')
+  uri = URI.parse(base_url + '/api/wallet_submit')
   http = Net::HTTP.new(uri.host, uri.port)
-  http.use_ssl = true
+  http.use_ssl = (uri.scheme == 'https') #only use https if specified;
   request = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
   request.body = { wallet: wallet_to_monitor, withholding_wallet: withholding_wallet }.to_json
   puts request.body.inspect
@@ -145,9 +146,9 @@ end
 def send_data_to_stop_tracking_wallet(wallet)
   # Use appropriate HTTP methods and libraries to send data
   # Example using Net::HTTP:
-  uri = URI.parse('https://server.taxolotl.xyz/api/wallet_stop')
+  uri = URI.parse(base_url + '/api/wallet_stop')
   http = Net::HTTP.new(uri.host, uri.port)
-  http.use_ssl = true
+  http.use_ssl = (uri.scheme == 'https') #only use https if specified;
   request = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
   request.body = wallet.to_json
   puts request.body.inspect
@@ -160,12 +161,17 @@ end
 def get_pending_transactions(current_user)
     @user_id = current_user.id
     @user_withholding_wallet = current_user.withholding_wallet
-    uri = URI.parse("https://server.taxolotl.xyz/api/pending_transactions/#{@user_id}")
+    uri = URI.parse("#{base_url}/api/pending_transactions/#{@user_id}")
     http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = (uri.scheme == 'https') #only use https if specified;
     request = Net::HTTP::Get.new(uri.request_uri)
-    http.use_ssl = true
     response = http.request(request)
     @pending_transactions = JSON.parse(response.body)
 
     puts "Pending Transactions: " + @pending_transactions.inspect
+end
+
+def base_url
+  'http://127.0.0.1:5000'
+  #'https://server.taxolotl.xyz'
 end
