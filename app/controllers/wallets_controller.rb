@@ -9,7 +9,8 @@ class WalletsController < ApplicationController
   def index
     @wallets = current_user.wallets
     @user = current_user
-    get_pending_transactions(@user)
+    #get_pending_transactions(@user)
+    @pending_transactions = {"message"=>"No pending transactions found for this user"} #temp
 
       if @pending_transactions == {"message"=>"No pending transactions found for this user"}
         @pending_transactions = nil
@@ -28,7 +29,7 @@ class WalletsController < ApplicationController
 
   # GET /wallets/1 or /wallets/1.json
   def show
-    get_pending_transactions(current_user)
+    #get_pending_transactions(current_user)
     @wallet = Wallet.find(params[:id])
     puts "Wallet: " + @wallet.inspect
   end
@@ -66,7 +67,8 @@ class WalletsController < ApplicationController
     else
       respond_to do |format|
         if @wallet.save
-          send_data_to_track_wallet(@wallet, current_user.withholding_wallet)
+
+          #send_data_to_track_wallet(@wallet, current_user.withholding_wallet)
           format.turbo_stream
           format.html { redirect_to wallet_url(@wallet), notice: "Wallet was successfully created." }
           format.json { render :show, status: :created, location: @wallet }
@@ -103,7 +105,7 @@ class WalletsController < ApplicationController
 
     @wallet.destroy
 
-    send_data_to_stop_tracking_wallet(@wallet)
+    #send_data_to_stop_tracking_wallet(@wallet)
 
     respond_to do |format|
       format.html { redirect_to wallets_url, notice: "Wallet was successfully destroyed." }
@@ -128,50 +130,50 @@ end
 private
 
 
-def send_data_to_track_wallet(wallet_to_monitor, withholding_wallet)
-  # Use appropriate HTTP methods and libraries to send data
-  # Example using Net::HTTP:
-  uri = URI.parse(base_url + '/api/wallet_submit')
-  http = Net::HTTP.new(uri.host, uri.port)
-  http.use_ssl = (uri.scheme == 'https') #only use https if specified;
-  request = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
-  request.body = { wallet: wallet_to_monitor, withholding_wallet: withholding_wallet }.to_json
-  puts request.body.inspect
-  response = http.request(request)
-
-  # Handle response as needed
-  puts response.body
-end
-
-def send_data_to_stop_tracking_wallet(wallet)
-  # Use appropriate HTTP methods and libraries to send data
-  # Example using Net::HTTP:
-  uri = URI.parse(base_url + '/api/wallet_stop')
-  http = Net::HTTP.new(uri.host, uri.port)
-  http.use_ssl = (uri.scheme == 'https') #only use https if specified;
-  request = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
-  request.body = wallet.to_json
-  puts request.body.inspect
-  response = http.request(request)
-
-  # Handle response as needed
-  puts response.body
-end
-
-def get_pending_transactions(current_user)
-    @user_id = current_user.id
-    @user_withholding_wallet = current_user.withholding_wallet
-    uri = URI.parse("#{base_url}/api/pending_transactions/#{@user_id}")
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = (uri.scheme == 'https') #only use https if specified;
-    request = Net::HTTP::Get.new(uri.request_uri)
-    response = http.request(request)
-    @pending_transactions = JSON.parse(response.body)
-
-    puts "Pending Transactions: " + @pending_transactions.inspect
-end
-
-def base_url
-  'http://127.0.0.1:5000'
-  #'https://server.taxolotl.xyz'
-end
+#def send_data_to_track_wallet(wallet_to_monitor, withholding_wallet)
+#  # Use appropriate HTTP methods and libraries to send data
+#  # Example using Net::HTTP:
+#  uri = URI.parse(base_url + '/api/wallet_submit')
+#  http = Net::HTTP.new(uri.host, uri.port)
+#  http.use_ssl = (uri.scheme == 'https') #only use https if specified;
+#  request = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
+#  request.body = { wallet: wallet_to_monitor, withholding_wallet: withholding_wallet }.to_json
+#  puts request.body.inspect
+#  response = http.request(request)
+#
+#  # Handle response as needed
+#  puts response.body
+#end
+#
+#def send_data_to_stop_tracking_wallet(wallet)
+#  # Use appropriate HTTP methods and libraries to send data
+#  # Example using Net::HTTP:
+#  uri = URI.parse(base_url + '/api/wallet_stop')
+#  http = Net::HTTP.new(uri.host, uri.port)
+#  http.use_ssl = (uri.scheme == 'https') #only use https if specified;
+#  request = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
+#  request.body = wallet.to_json
+#  puts request.body.inspect
+#  response = http.request(request)
+#
+#  # Handle response as needed
+#  puts response.body
+#end
+#
+#def get_pending_transactions(current_user)
+#    @user_id = current_user.id
+#    @user_withholding_wallet = current_user.withholding_wallet
+#    uri = URI.parse("#{base_url}/api/pending_transactions/#{@user_id}")
+#    http = Net::HTTP.new(uri.host, uri.port)
+#    http.use_ssl = (uri.scheme == 'https') #only use https if specified;
+#    request = Net::HTTP::Get.new(uri.request_uri)
+#    response = http.request(request)
+#    @pending_transactions = JSON.parse(response.body)
+#
+#    puts "Pending Transactions: " + @pending_transactions.inspect
+#end
+#
+#def base_url
+#  'http://127.0.0.1:5000'
+#  #'https://server.taxolotl.xyz'
+#end

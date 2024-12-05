@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div id="pending-transactions">
-                <% if pending_transactions.is_a?(Hash) && pending_transactions.key?("message") || pending_transactions.empty? %>
+                <% if pending_transactions.is_a?(Hash) && pending_transactions.key?("message") || pending_transactions.nil? %>
                     <p>No pending transactions</p>
                 <% else %>
                     <% pending_transactions.each do |transaction| %>
