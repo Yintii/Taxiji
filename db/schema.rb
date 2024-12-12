@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_25_044932) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_05_214726) do
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -32,6 +32,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_25_044932) do
     t.string "chain"
     t.float "percentage"
     t.string "wallet_address"
+    t.boolean "monitoring_status", default: false, null: false
     t.index ["user_id"], name: "index_wallets_on_user_id"
     t.index ["wallet_address", "chain"], name: "index_wallets_on_wallet_address_and_chain", unique: true
   end

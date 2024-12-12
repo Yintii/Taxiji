@@ -4,7 +4,6 @@ require('uri')
 class WalletsController < ApplicationController
   before_action :set_wallet, only: %i[ show edit update destroy ]
 
-
   # GET /wallets or /wallets.json
   def index
     @wallets = current_user.wallets
@@ -53,6 +52,8 @@ class WalletsController < ApplicationController
       current_user.withholding_wallet = @wallet.wallet_address
       if current_user.save
         respond_to do |format|
+          
+          #we do not need to create a monitoring service for the witholding wallets  
           #redirect to the new wallet
           format.turbo_stream
           format.html { redirect_to wallet_url(@wallet), notice: "Wallet was successfully created." }
@@ -67,11 +68,21 @@ class WalletsController < ApplicationController
     else
       respond_to do |format|
         if @wallet.save
-
-          #send_data_to_track_wallet(@wallet, current_user.withholding_wallet)
-          format.turbo_stream
-          format.html { redirect_to wallet_url(@wallet), notice: "Wallet was successfully created." }
-          format.json { render :show, status: :created, location: @wallet }
+          puts("Wallet created successfully!")
+          #create a monitoring service for the wallets that are not the witholding wallet
+          puts("Starting monitoring service for wallet...")
+          if start_monitoring(@wallet)
+            puts("Wallet monitoring started successfully!")
+            format.turbo_stream
+            format.html { redirect_to wallet_url(@wallet), notice: "Wallet was successfully created." }
+            format.json { render :show, status: :created, location: @wallet }
+          else
+            #handle monitoring service failure
+            @wallet.destroy #rollback wallet creation
+            puts "Something went wrong.. rolling back wallet creation"
+            format.html { redirect_to wallets_url, alert: "Failed to create monitoring process for wallet" }  
+            format.json { render json: { error: "Failed to start monitoring service." }, status: :unprocessable_entity }
+          end
         else
           format.html { render :new, status: :unprocessable_entity }
           format.json { render json: @wallet.errors, status: :unprocessable_entity }
@@ -102,14 +113,22 @@ class WalletsController < ApplicationController
       current_user.save
     end
 
+    
+    puts("Stopping monitoring service for #{@wallet}...")
+    if stop_monitoring(@wallet)
+      puts("Stopped monitoring process for #{@wallet} successfully!")
+      puts("Destroying wallet...")
+      if @wallet.destroy
+        puts("Wallet #{@wallet} destroyed successfully!")
 
-    @wallet.destroy
-
-    #send_data_to_stop_tracking_wallet(@wallet)
-
-    respond_to do |format|
-      format.html { redirect_to wallets_url, notice: "Wallet was successfully destroyed." }
-      format.json { head :no_content }
+        respond_to do |format|
+          format.html { redirect_to wallets_url, notice: "Wallet was successfully destroyed." }
+          format.json { head :no_content }
+        end
+      end
+    else
+      format.html { redirect_to wallet_url(@wallet), alert: "Failed to stop monitoring process for wallet" }
+      format.json { render json: { error: "Failed to stop monitoring service." }, status: :unprocessable_entity }
     end
   end
 
@@ -124,12 +143,28 @@ class WalletsController < ApplicationController
       puts params.inspect
       params.require(:wallet).permit(:wallet_name, :wallet_address, :chain, :percentage)
     end
+
+    def start_monitoring(wallet)
+      puts "starting wallet with the private method in the wallets controller."
+      wallet.start_monitoring
+    rescue StandardError => e
+      Rails.logger.error("Failed to start monitoring for wallet #{wallet.wallet_address}: #{e.message}")
+      false 
+    end
+
+    def stop_monitoring(wallet)
+      wallet.stop_monitoring
+    rescue StandardError => e
+      Rails.logger.error("Failed to stop monitoring for wallet #{wallet.wallet_address}: #{e.message}")
+      false
+    end
 end
 
 
-private
 
 
+
+#private
 #def send_data_to_track_wallet(wallet_to_monitor, withholding_wallet)
 #  # Use appropriate HTTP methods and libraries to send data
 #  # Example using Net::HTTP:
