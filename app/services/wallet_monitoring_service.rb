@@ -4,6 +4,8 @@ require 'uri'
 
 class WalletMonitoringService
 
+  API_KEY = Rails.application.credentials.moralis[:api_key]
+
   def self.start(wallet_address)
 
     stream_id = check_for_existing_stream
@@ -32,7 +34,7 @@ class WalletMonitoringService
     uri = URI.parse('https://api.moralis-streams.com/streams/evm?limit=1')
     headers = {
       'accept' => 'application/json',
-      'X-API-Key' => Rails.application.credentials.moralis[:api_key]
+      'X-API-Key' => API_KEY
     }
 
     response_body = get_response_body_GET(uri, headers)
@@ -54,16 +56,18 @@ class WalletMonitoringService
 
     headers = {
       'accept' => 'application/json',
-      'X-API-Key' => Rails.application.credentials.moralis[:api_key],
+      'X-API-Key' => API_KEY,
       'content-type' => 'application/json'
     }
 
     payload = {
-      webhookUrl: 'https://affc-2603-8001-58f0-7770-9c49-3b52-fdc4-32b.ngrok-free.app/webhooks/handle_created_stream',
+      webhookUrl: 'https://affc-2603-8001-58f0-7770-9c49-3b52-fdc4-32b.ngrok-free.app/webhooks/handle_transaction_data',
       description: 'new-transaction-stream',
       tag: 'taxolotl',
       chainIds: ['0xaa36a7'],
-      includeContractLogs: true
+      includeContractLogs: true,
+      includeNativeTxs: true,
+      includeInternalTxs: true
     }.to_json
 
     response_body = get_response_body_PUT(uri, payload, headers)
@@ -82,7 +86,7 @@ class WalletMonitoringService
   
       headers = {
         'accept' => 'application/json',
-        'X-API-Key' => Rails.application.credentials.moralis[:api_key],
+        'X-API-Key' => API_KEY,
         'content-type' => 'application/json'
       }
       
@@ -105,7 +109,7 @@ class WalletMonitoringService
 
     headers = {
       'accept' => 'application/json',
-      'X-API-Key' => Rails.application.credentials.moralis[:api_key],
+      'X-API-Key' => API_KEY,
       'content-type' => 'application/json'
     }
 

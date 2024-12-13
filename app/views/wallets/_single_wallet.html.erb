@@ -25,14 +25,12 @@
                 </div>
             </div>
             <div id="pending-transactions">
-                <% if pending_transactions.is_a?(Hash) && pending_transactions.key?("message") || pending_transactions.nil? %>
+                <% if pending_transactions.nil? or pending_transactions.length == 0 %>
                     <p>No pending transactions</p>
                 <% else %>
                     <% pending_transactions.each do |transaction| %>
-                        <% if transaction["chain"] == wallet.chain %>
                             <div class="transaction">
-                            <p class="hash">Hash: <%= transaction["hash"] %></p>
-                            <p class="amount">Amount: <%= transaction["amt_to_withhold"] %></p>
+                            <p class="value">Value: <%= transaction["value"] %></p>
                             <button 
                                 class="transaction-button" 
                                 data-hash="<%= transaction["hash"] %>" 
@@ -42,7 +40,6 @@
                                 data-percentage="<%= @wallet.percentage %>">
                                 Process</button>
                         </div>
-                        <% end %>
                     <% end %>
                 <% end %>
             </div>

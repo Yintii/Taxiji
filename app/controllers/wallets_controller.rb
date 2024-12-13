@@ -8,35 +8,34 @@ class WalletsController < ApplicationController
   def index
     @wallets = current_user.wallets
     @user = current_user
-    #get_pending_transactions(@user)
-    @pending_transactions = {"message"=>"No pending transactions found for this user"} #temp
 
-      if @pending_transactions == {"message"=>"No pending transactions found for this user"}
-        @pending_transactions = nil
-      else    
-        #create a hash of the transactions, with the chain as the key
-        @pending_transactions_hash = Hash.new
-        @pending_transactions.each do |transaction|
-          if @pending_transactions_hash[transaction['chain']].nil?
-            @pending_transactions_hash[transaction['chain']] = Array.new
-          end
-          @pending_transactions_hash[transaction['chain']].push(transaction)
-        end
-        puts "Pending Transactions Hash: " + @pending_transactions_hash.inspect
-      end
+    @pending_transactions = @wallets.map do |wallet|
+      {
+        wallet_address: wallet[:wallet_address],
+        pending_transactions: wallet[:pending_transactions]
+      }
+    end
+
+    if @pending_transactions.empty?
+      @pending_transactions = nil
+    end
+
+    puts "Pending Transactions Hash: " + @pending_transactions.inspect
   end
 
   # GET /wallets/1 or /wallets/1.json
   def show
     #get_pending_transactions(current_user)
     @wallet = Wallet.find(params[:id])
-    puts "Wallet: " + @wallet.inspect
+    @pending_transactions = @wallet.pending_transactions
+    puts "Wallet: #{@wallet.inspect}"
+    puts "pending transactions: #{@pending_transactions.inspect}"
   end
 
   # GET /wallets/new
   def new
     @wallet = Wallet.new
-    @user = current_user;
+    @user = current_user
   end
 
   # GET /wallets/1/edit

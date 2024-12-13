@@ -6,6 +6,7 @@ class Wallet < ApplicationRecord
   validates :wallet_address, presence: true, length: { maximum: 42 }
   validates :chain, presence: true
   validates :wallet_address, uniqueness: { scope: :chain, message: "Address and chain combination must be unique!" }
+  validates :pending_transactions, presence: true
 
   #scopes
   scope :monitored, -> { where(monitoring_status: true) }
@@ -40,5 +41,23 @@ class Wallet < ApplicationRecord
     Rails.logger.error("Error with stopping monitoring service for wallet #{wallet_address}: #{e.message}")
     false
   end
+
+  def update_pending_transactions(transaction)
+    puts "Given transaction: #{transaction}"
+    puts "Pending if it's here: #{pending_transactions}"
+    current_transactions = pending_transactions ? pending_transactions : []
+    puts "Current_transactions: #{current_transactions}"
+
+
+    current_transactions << transaction
+
+    update!(pending_transactions: current_transactions)
+
+    puts "Updated pending transactions for wallet #{wallet_address}: #{transaction}"
+  rescue StandardError => e
+    Rails.logger.error("Error updating the pending transactions for #{wallet_address}: #{e.message}")
+    false
+  end
+
 end
 
