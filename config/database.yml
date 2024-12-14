@@ -83,6 +83,6 @@ production:
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  database: Taxolotl_production
-  username: Taxolotl
+  database: taxolotl_db
+  username: taxolotl_db_user
   password: <%= ENV["TAXOLOTL_DATABASE_PASSWORD"] %>
