@@ -4,7 +4,10 @@ require 'uri'
 
 class WalletMonitoringService
 
-  API_KEY = Rails.application.credentials.moralis[:api_key]
+  #Render did not like this when I tried to deploy
+  #so we've commenting it out and put the Rails const in its place
+
+  #API_KEY = Rails.application.credentials.moralis[:api_key]
 
   def self.start(wallet_address)
 
@@ -34,7 +37,7 @@ class WalletMonitoringService
     uri = URI.parse('https://api.moralis-streams.com/streams/evm?limit=1')
     headers = {
       'accept' => 'application/json',
-      'X-API-Key' => API_KEY
+      'X-API-Key' => Rails.application.credentials.moralis[:api_key]
     }
 
     response_body = get_response_body_GET(uri, headers)
@@ -56,7 +59,7 @@ class WalletMonitoringService
 
     headers = {
       'accept' => 'application/json',
-      'X-API-Key' => API_KEY,
+      'X-API-Key' => Rails.application.credentials.moralis[:api_key],
       'content-type' => 'application/json'
     }
 
@@ -86,7 +89,7 @@ class WalletMonitoringService
   
       headers = {
         'accept' => 'application/json',
-        'X-API-Key' => API_KEY,
+        'X-API-Key' => Rails.application.credentials.moralis[:api_key],
         'content-type' => 'application/json'
       }
       
@@ -109,7 +112,7 @@ class WalletMonitoringService
 
     headers = {
       'accept' => 'application/json',
-      'X-API-Key' => API_KEY,
+      'X-API-Key' => Rails.application.credentials.moralis[:api_key],
       'content-type' => 'application/json'
     }
 
