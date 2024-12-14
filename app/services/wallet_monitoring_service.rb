@@ -63,8 +63,10 @@ class WalletMonitoringService
       'content-type' => 'application/json'
     }
 
+    webhook_url = Rails.env.production ? ENV['LIVE_URL'] : ENV['LOCAL_URL']
+
     payload = {
-      webhookUrl: 'https://affc-2603-8001-58f0-7770-9c49-3b52-fdc4-32b.ngrok-free.app/webhooks/handle_transaction_data',
+      webhookUrl: webhook_url,
       description: 'new-transaction-stream',
       tag: 'taxolotl',
       chainIds: ['0xaa36a7'],
