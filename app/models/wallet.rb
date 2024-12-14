@@ -6,7 +6,6 @@ class Wallet < ApplicationRecord
   validates :wallet_address, presence: true, length: { maximum: 42 }
   validates :chain, presence: true
   validates :wallet_address, uniqueness: { scope: :chain, message: "Address and chain combination must be unique!" }
-  validates :pending_transactions, presence: true
 
   #scopes
   scope :monitored, -> { where(monitoring_status: true) }

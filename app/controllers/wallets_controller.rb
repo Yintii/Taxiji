@@ -46,6 +46,7 @@ class WalletsController < ApplicationController
   def create
     @wallet = current_user.wallets.build(wallet_params)
 
+    puts "Wallet to create: #{@wallet.inspect}"
 
     if @wallet.chain == 'Withholding'
       current_user.withholding_wallet = @wallet.wallet_address
@@ -59,8 +60,14 @@ class WalletsController < ApplicationController
           format.json { render :show, status: :created, location: @wallet }
         end
       else
+
+        Rails.logger.error "User save failed: #{current_user.errors.full_messages.join(', ')}"
+
         respond_to do |format|
-          format.html { render :new, status: :unprocessable_entity }
+          format.html do
+            flash.now[:alert] = "Failed to save user: #{current_user.errors.full_messages.join(', ')}"
+            render :new, status: :unprocessable_entity
+          end
           format.json { render json: @wallet.errors, status: :unprocessable_entity }
         end
       end

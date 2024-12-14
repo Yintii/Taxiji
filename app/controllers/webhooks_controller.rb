@@ -9,9 +9,7 @@ class WebhooksController < ApplicationController
     
     payload = JSON.parse(request.body.read)
 
-    Rails.logger.debug "Recieved a TRANSACTION payload: #{payload}"
-
-    if payload["txs"]
+    if payload["txs"][0]
 
       wallet_address = payload["txs"][0]["fromAddress"]
       value = payload["txs"][0]["value"]
