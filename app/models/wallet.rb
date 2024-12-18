@@ -13,7 +13,10 @@ class Wallet < ApplicationRecord
 
   #custom methods
   def start_monitoring
+    puts "Start monitoring function"
+
     response = WalletMonitoringService.start(wallet_address: wallet_address)
+    
     if response[:success]
       update!(monitoring_status: true)
       puts "Monitoring started for wallet #{wallet_address}: #{response[:data]}" 
@@ -23,7 +26,7 @@ class Wallet < ApplicationRecord
       { failure: true, error: "Monitoring failed for #{wallet_address}" }
     end
   rescue StandardError => e
-    Rails.logger.error("Error starting monitoring service for wallet #{wallet_address}: #{e.message}")
+    Rails.logger.error("Error from [ app/models/wallet.rb ] starting monitoring service for wallet #{wallet_address}: #{e.message}")
     false
   end
 

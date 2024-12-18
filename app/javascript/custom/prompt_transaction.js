@@ -1,9 +1,9 @@
 document.addEventListener('turbo:load', async function() {
     console.log('turbo:load event fired');
     const ABI = [{ "inputs": [{ "internalType": "address payable", "name": "depositAddress_", "type": "address" }], "stateMutability": "nonpayable", "type": "constructor" }, { "inputs": [], "name": "depositAddress", "outputs": [{ "internalType": "address payable", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "getDepositAddress", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address payable", "name": "_withholding_wallet", "type": "address" }, { "internalType": "uint256", "name": "withholding_amount", "type": "uint256" }, { "internalType": "uint256", "name": "processing_fee", "type": "uint256" }], "name": "sendFunds", "outputs": [], "stateMutability": "payable", "type": "function" }, { "inputs": [{ "internalType": "address payable", "name": "depositAddress_", "type": "address" }], "name": "setDepositAddress", "outputs": [], "stateMutability": "nonpayable", "type": "function" }];
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const provider = new ethers.BrowserProvider(window.ethereum)
     let accounts = await provider.send("eth_requestAccounts", []);
-    const signer = provider.getSigner()
+    let signer = await provider.getSigner()
     const taxiji = new ethers.Contract('0x7509Aa80Ef5a70f0e8EC15018916574097DD1137', ABI, signer);
 
     const withholdSingleTransaction = async (transaction) => {
@@ -64,5 +64,3 @@ document.addEventListener('turbo:load', async function() {
         });
     });
 });
-
-
