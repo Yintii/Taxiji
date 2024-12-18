@@ -14,12 +14,24 @@ class WebhooksController < ApplicationController
       wallet_address = payload["txs"][0]["fromAddress"]
       value = payload["txs"][0]["value"]
       chain_id = payload["chainId"]
+      hash = payload.dig('block')['hash']
 
       wallet = find_wallet(wallet_address) 
 
+      puts "OUR WALLET : #{wallet.inspect}"
+
+      puts "transaction HASH: #{hash}"
+
+      withholding_wallet = get_withholding_wallet(wallet.user_id)
+
+      puts "GOT THE WITHHOLDING WALLET: #{withholding_wallet}"
+
       transaction = {
         "value": value,
-        "chain_id": chain_id
+        "chain_id": chain_id,
+        "user_id": wallet.user_id,
+        "transaction_hash": hash,
+        "withholding_wallet": withholding_wallet
       }
 
       
@@ -59,6 +71,11 @@ class WebhooksController < ApplicationController
 
   def find_wallet(wallet_address)
     wallet = Wallet.find_by('LOWER(wallet_address) = ?', wallet_address)
+  end
+
+  def get_withholding_wallet(user_id)
+    user = User.find_by(id: user_id)
+    withholding_wallet = user.withholding_wallet
   end
 
 end

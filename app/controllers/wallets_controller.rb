@@ -25,7 +25,6 @@ class WalletsController < ApplicationController
 
   # GET /wallets/1 or /wallets/1.json
   def show
-    #get_pending_transactions(current_user)
     @wallet = Wallet.find(params[:id])
     @pending_transactions = @wallet.pending_transactions
     puts "Wallet: #{@wallet.inspect}"

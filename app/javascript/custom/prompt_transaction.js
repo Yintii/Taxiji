@@ -9,11 +9,17 @@ document.addEventListener('turbo:load', async function() {
     const withholdSingleTransaction = async (transaction) => {
         const { user_withholding_wallet, amt_to_withhold, fee, hash, user } = transaction;
 
+        console.log("Amount to withhold: ", amt_to_withhold)
+        console.log("Its type: ", typeof amt_to_withhold)
+
+        console.log("Fee amount: ", fee)
+        console.log("Fee type: ", typeof fee)
+
         const tx = await taxiji.sendFunds(
             user_withholding_wallet, 
             amt_to_withhold, 
             fee, 
-            { value: amt_to_withhold.add(fee) }
+            { value: amt_to_withhold + fee }
         );
 
         console.log("Mining transaction...")
@@ -21,17 +27,6 @@ document.addEventListener('turbo:load', async function() {
         await tx.wait();
 
         console.log("Transaction mined: ", tx.hash);
-                    
-        let response = fetch(`https://server.taxolotl.xyz/api/pending_transactions/${user}`,{
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ hash: hash })
-        });
-
-        await response.then((response) => response.json())
-                .then((data) => console.log(data));
 
         window.location.reload();
 
@@ -43,9 +38,9 @@ document.addEventListener('turbo:load', async function() {
             console.log('percentage: ', percentage)
             const user_withholding_wallet = event.target.dataset.wallet;
             console.log('user_withholding_wallet: ', user_withholding_wallet)
-            const amt_to_withhold = ethers.BigNumber.from(event.target.dataset.amt);
+            const amt_to_withhold = BigInt(event.target.dataset.amt | 0);
             console.log('amt_to_withhold: ', amt_to_withhold)
-            const fee = ethers.BigNumber.from(event.target.dataset.amt * (percentage / 100));
+            const fee = BigInt(event.target.dataset.amt | 0 * (percentage / 100));
             console.log('fee: ', fee)
             const hash = event.target.dataset.hash;
             console.log('hash: ', hash)

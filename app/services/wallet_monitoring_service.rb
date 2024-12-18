@@ -12,25 +12,20 @@ class WalletMonitoringService
   def self.start(wallet_address)
 
     puts "Checking for stream id"
-
     stream_id = check_for_existing_stream
-
     puts "stream id: #{stream_id}"
-
     wallet_added_to_stream = add_wallet_to_stream(stream_id, wallet_address)
-
     {success: true, message: "Started"}
+
   end
 
   def self.stop(wallet_address)
 
     stream_id = check_for_existing_stream
-
     response = delete_address_from_stream(stream_id, wallet_address)
-
     puts "Wallet stop response: #{response}"
-
     { success: true, message: "Stop wallet faux function" }
+
   end
 
   def self.check_for_existing_stream
@@ -41,21 +36,13 @@ class WalletMonitoringService
     }
 
     response_body = get_response_body_GET(uri, headers)
-
     puts "Checking for existing stream service function"
-
     puts "Response Body: #{response_body}"
-
-
     total_streams = response_body.dig('total')
-  
     puts "Total streams: #{total_streams}"
-
     if total_streams > 0
       puts "We have streams to choose from"
-
       response_body.dig('result')[0]['id']
-
     else
       puts "No streasms"
       stream_id = create_new_stream
@@ -65,10 +52,7 @@ class WalletMonitoringService
   def self.create_new_stream
 
     puts "We need to create a new stream!"
-
-
     uri = URI.parse('https://api.moralis-streams.com/streams/evm')
-
     headers = {
       'accept' => 'application/json',
       'X-API-Key' => Rails.application.credentials.moralis[:api_key],
@@ -76,9 +60,7 @@ class WalletMonitoringService
     }
 
     base_url = Rails.env.production? ? ENV['LIVE_URL'] : ENV['LOCAL_URL']
-
     webhook_url = "https://" +  base_url + ENV['WEBHOOK_PATH']
-
     puts "Webhook url: #{webhook_url}"
 
     payload = {
@@ -91,12 +73,8 @@ class WalletMonitoringService
       includeInternalTxs: true
     }.to_json
   
-
-
     response_body = get_response_body_PUT(uri, payload, headers)
-
     puts "Response body from create_new_stream: #{response_body}"
-
 
     return response_body.dig('id')
   rescue StandardError => e
