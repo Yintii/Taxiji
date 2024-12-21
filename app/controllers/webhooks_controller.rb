@@ -9,7 +9,15 @@ class WebhooksController < ApplicationController
     
     payload = JSON.parse(request.body.read)
 
-    if payload["txs"][0]
+    contract_address = "0x7509aa80ef5a70f0e8ec15018916574097dd1137".downcase
+
+    puts "Payload first transaction to address: #{payload["txs"][0]["toAddress"]}"
+
+    puts "our contract address: #{contract_address}"
+
+    puts "Comparison: #{contract_address == payload["txs"][0]["toAddress"]}"
+
+    if payload["txs"][0] and payload['confirmed'] == false and payload["txs"][0]["toAddress"] != contract_address
 
       wallet_address = payload["txs"][0]["fromAddress"]
       value = payload["txs"][0]["value"]
