@@ -5,17 +5,19 @@ class WebhooksController < ApplicationController
   skip_before_action :authenticate_user!, only: [:handle_transaction_data, :handle_created_stream]
   skip_before_action :verify_authenticity_token, only: [:handle_transaction_data, :handle_created_stream]
 
+  def handle_processed_transaction
+    
+    payload = JSON.parse(request.body.read)
+
+
+
+  end
+
   def handle_transaction_data
     
     payload = JSON.parse(request.body.read)
 
     contract_address = "0x7509aa80ef5a70f0e8ec15018916574097dd1137".downcase
-
-    puts "Payload first transaction to address: #{payload["txs"][0]["toAddress"]}"
-
-    puts "our contract address: #{contract_address}"
-
-    puts "Comparison: #{contract_address == payload["txs"][0]["toAddress"]}"
 
     if payload["txs"][0] and payload['confirmed'] == false and payload["txs"][0]["toAddress"] != contract_address
 
@@ -63,6 +65,15 @@ class WebhooksController < ApplicationController
 
   def authenticate_moralis_request
     # Assuming Moralis sends a secret token in headers for authentication
+
+    puts "Authenticate moralis request origin: #{request.host}"
+
+    if request.host == "localhost"
+      return {success: true, "message": 'request from localhost' }
+    elsif request.host == "taxolotl.xyz"
+      return {success: true, "message": "request from taxolotl.xyz" }
+    end
+
     provided_signature = request.headers['x-signature']
     raise 'Signature not provided' unless provided_signature
 

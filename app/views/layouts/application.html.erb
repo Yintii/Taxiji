@@ -26,4 +26,13 @@
     </div>
   </body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.4/ethers.umd.min.js" integrity="sha512-V3xRGsQMQ8CG4l2gVN44TCDmNY5cdlxbSvejrgmWxcLKHft0Q3XQDbeuJ9aot14mpNuRWGtI//WKraedDGNZ+g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    let baseURL
+    if (window.location.hostname == 'localhost' || window.location.hostname == '127.0.0.1'){
+      baseURL = "http://localhost:3000/webhooks/handle_processed_transaction";
+    }else{ 
+      baseURL = "<%= Rails.application.credentials.production['webhook_url'] %>";
+    }
+  </script>
+
 </html>

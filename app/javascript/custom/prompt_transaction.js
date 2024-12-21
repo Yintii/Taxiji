@@ -27,8 +27,23 @@ document.addEventListener('turbo:load', async function() {
         await tx.wait();
 
         console.log("Transaction mined: ", tx.hash);
+      
 
-        window.location.reload();
+        response = fetch(baseURL, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
+          },
+          body: JSON.stringify({
+            hash,
+            user
+          })
+        });
+        
+
+
+//        window.location.reload();
 
     };
 

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   post 'wallets/stop_monitoring', to: 'wallets#stop_monitoring'
 
   post 'webhooks/handle_transaction_data', to: 'webhooks#handle_transaction_data'
-  post 'webhooks/handle_created_stream', to: 'webhooks#handle_created_stream'
+  put 'webhooks/handle_processed_transaction', to: 'webhooks#handle_processed_transaction'
 
   namespace :users do
     resource :account, only: [:edit, :update, :show]
