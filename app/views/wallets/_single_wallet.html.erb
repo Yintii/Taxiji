@@ -35,8 +35,10 @@
                                 class="transaction-button" 
                                 data-hash="<%= transaction["transaction_hash"] %>" 
                                 data-user="<%= transaction["user_id"] %>" 
-                                data-wallet="<%= transaction["withholding_wallet"] %>" 
+                                data-withholding_wallet="<%= transaction["withholding_wallet"] %>" 
+                                data-transacting_wallet="<%= wallet.wallet_address %>"
                                 data-amt="<%= Integer(transaction["value"]) * (wallet.percentage / 100) %>">
+
                                 Process</button>
                         </div>
                     <% end %>

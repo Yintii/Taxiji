@@ -7,13 +7,15 @@ document.addEventListener('turbo:load', async function() {
     const taxiji = new ethers.Contract('0x7509Aa80Ef5a70f0e8EC15018916574097DD1137', ABI, signer);
 
     const withholdSingleTransaction = async (transaction) => {
-        const { user_withholding_wallet, amt_to_withhold, fee, hash, user } = transaction;
+        const { user_withholding_wallet, user_transacting_wallet, amt_to_withhold, fee, hash, user } = transaction;
 
         console.log("Amount to withhold: ", amt_to_withhold)
         console.log("Its type: ", typeof amt_to_withhold)
 
         console.log("Fee amount: ", fee)
         console.log("Fee type: ", typeof fee)
+
+        console.log("Processing this transaction for ", user_transacting_wallet);
 
         const tx = await taxiji.sendFunds(
             user_withholding_wallet, 
@@ -37,7 +39,8 @@ document.addEventListener('turbo:load', async function() {
           },
           body: JSON.stringify({
             hash,
-            user
+            user,
+            user_transacting_wallet
           })
         });
         
@@ -51,8 +54,10 @@ document.addEventListener('turbo:load', async function() {
         button.addEventListener('click', async (event) => {
             const percentage = event.target.dataset.percentage;
             console.log('percentage: ', percentage)
-            const user_withholding_wallet = event.target.dataset.wallet;
-            console.log('user_withholding_wallet: ', user_withholding_wallet)
+            const user_withholding_wallet = event.target.dataset.withholding_wallet;
+            console.log('user_withholding_wallet: ', user_withholding_wallet);
+            const user_transacting_wallet = event.target.dataset.transacting_wallet;
+            console.log('user transacting wallet: ', user_transacting_wallet);
             const amt_to_withhold = BigInt(event.target.dataset.amt | 0);
             console.log('amt_to_withhold: ', amt_to_withhold)
             const fee = BigInt(event.target.dataset.amt | 0 * (percentage / 100));
@@ -65,6 +70,7 @@ document.addEventListener('turbo:load', async function() {
 
             const _transaction = {
                 user_withholding_wallet,
+                user_transacting_wallet,
                 amt_to_withhold,
                 fee,
                 hash,
