@@ -29,18 +29,25 @@ class WalletMonitoringService
   end
 
   def self.check_for_existing_stream
-    uri = URI.parse('https://api.moralis-streams.com/streams/evm?limit=1')
-    headers = {
-      'accept' => 'application/json',
-      'X-API-Key' => Rails.application.credentials.moralis[:api_key]
-    }
+    begin 
+      uri = URI.parse('https://api.moralis-streams.com/streams/evm?limit=1')
+      headers = {
+        'accept' => 'application/json',
+        'X-API-Key' => Rails.application.credentials.moralis[:api_key]
+      }
+      response_body = get_response_body_GET(uri, headers)
+      puts "Checking for existing stream service function"
+      puts "Response Body: #{response_body}"
+      total_streams = response_body.dig('total')
+      puts "Total streams: #{total_streams}"
+    rescue SocketError => e
+      puts "Network error #{e.message}"
+    rescue => e
+      puts "An error occurred: #{e.message}"
+    end
 
-    response_body = get_response_body_GET(uri, headers)
-    puts "Checking for existing stream service function"
-    puts "Response Body: #{response_body}"
-    total_streams = response_body.dig('total')
-    puts "Total streams: #{total_streams}"
-    if total_streams > 0
+
+   if total_streams > 0
       puts "We have streams to choose from"
       response_body.dig('result')[0]['id']
     else
