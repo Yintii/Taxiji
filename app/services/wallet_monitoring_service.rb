@@ -23,9 +23,7 @@ class WalletMonitoringService
 
   end
 
-  def self.check_for_existing_stream
-    
-    key = ENV['MORALIS_API_KEY']
+  def self.check_for_existing_stream 
 
     begin 
       uri = URI.parse('https://api.moralis-streams.com/streams/evm?limit=1')
@@ -60,7 +58,7 @@ class WalletMonitoringService
     uri = URI.parse('https://api.moralis-streams.com/streams/evm')
     headers = {
       'accept' => 'application/json',
-      'X-API-Key' => Rails.application.credentials.moralis[:api_key],
+      'X-API-Key' => pi_key],
       'content-type' => 'application/json'
     }
 
@@ -95,7 +93,7 @@ class WalletMonitoringService
   
       headers = {
         'accept' => 'application/json',
-        'X-API-Key' => Rails.application.credentials.moralis[:api_key],
+        'X-API-Key' => ENV['MORALIS_API_KEY'],
         'content-type' => 'application/json'
       }
       
@@ -118,7 +116,7 @@ class WalletMonitoringService
 
     headers = {
       'accept' => 'application/json',
-      'X-API-Key' => Rails.application.credentials.moralis[:api_key],
+      'X-API-Key' => ENV['MORALIS_API_KEY'],
       'content-type' => 'application/json'
     }
 
