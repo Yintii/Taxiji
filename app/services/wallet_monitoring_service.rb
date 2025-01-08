@@ -31,7 +31,12 @@ class WalletMonitoringService
   def self.check_for_existing_stream
     begin 
       puts "Checking we can read the api key..."
-      puts Rails.application.credentials.moralis[:api_key]
+
+      puts "Rails body (Rails):: #{Rails}"
+      puts "Rails application (Rails.application):: #{Rails.application}" 
+      puts "Rails Credentials (Rails.application.credentials):: #{Rails.application.credentials}"
+      puts "Rails Moralis (Rails.application.credentials.moralis):: #{Rails.application.credentials.moralis}"
+      puts "Rails Api key: #{Rails.application.credentials.moralis[:api_key]}"
 
       uri = URI.parse('https://api.moralis-streams.com/streams/evm?limit=1')
       headers = {
