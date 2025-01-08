@@ -4,11 +4,6 @@ require 'uri'
 
 class WalletMonitoringService
 
-  #Render did not like this when I tried to deploy
-  #so we've commenting it out and put the Rails const in its place
-
-  #API_KEY = Rails.application.credentials.moralis[:api_key]
-
   def self.start(wallet_address)
 
     puts "Checking for stream id"
@@ -29,19 +24,14 @@ class WalletMonitoringService
   end
 
   def self.check_for_existing_stream
+    
+    key = ENV['MORALIS_API_KEY']
+
     begin 
-      puts "Checking we can read the api key..."
-
-      puts "Rails body (Rails):: #{Rails}"
-      puts "Rails application (Rails.application):: #{Rails.application}" 
-      puts "Rails Credentials (Rails.application.credentials):: #{Rails.application.credentials}"
-      puts "Rails Moralis (Rails.application.credentials.moralis):: #{Rails.application.credentials.moralis}"
-      puts "Rails Api key: #{Rails.application.credentials.moralis[:api_key]}"
-
       uri = URI.parse('https://api.moralis-streams.com/streams/evm?limit=1')
       headers = {
         'accept' => 'application/json',
-        'X-API-Key' => Rails.application.credentials.moralis[:api_key]
+        'X-API-Key' => ENV['MORALIS_API_KEY']
       }
       response_body = get_response_body_GET(uri, headers)
       puts "Checking for existing stream service function"
