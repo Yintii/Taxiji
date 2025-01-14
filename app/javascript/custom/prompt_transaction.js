@@ -7,31 +7,31 @@ document.addEventListener('turbo:load', async function() {
     const taxiji = new ethers.Contract('0x7509Aa80Ef5a70f0e8EC15018916574097DD1137', ABI, signer);
 
     const withholdSingleTransaction = async (transaction) => {
-        const { user_withholding_wallet, user_transacting_wallet, amt_to_withhold, fee, hash, user } = transaction;
+      const { user_withholding_wallet, user_transacting_wallet, amt_to_withhold, fee, hash, user } = transaction;
 
-        console.log("Amount to withhold: ", amt_to_withhold)
-        console.log("Its type: ", typeof amt_to_withhold)
+      console.log("Amount to withhold: ", amt_to_withhold)
+      console.log("Its type: ", typeof amt_to_withhold)
 
-        console.log("Fee amount: ", fee)
-        console.log("Fee type: ", typeof fee)
+      console.log("Fee amount: ", fee)
+      console.log("Fee type: ", typeof fee)
 
-        console.log("Processing this transaction for ", user_transacting_wallet);
+      console.log("Processing this transaction for ", user_transacting_wallet);
 
-        const tx = await taxiji.sendFunds(
-            user_withholding_wallet, 
-            amt_to_withhold, 
-            fee, 
-            { value: amt_to_withhold + fee }
-        );
+      const tx = await taxiji.sendFunds(
+        user_withholding_wallet, 
+        amt_to_withhold, 
+        fee, 
+        { value: amt_to_withhold + fee }
+      );
 
-        console.log("Mining transaction...")
+      console.log("Mining transaction...")
 
-        await tx.wait();
+      await tx.wait();
 
-        console.log("Transaction mined: ", tx.hash);
-      
-
-        response = fetch(baseURL, {
+      console.log("Transaction mined: ", tx.hash);
+              
+      try{
+        const response = await fetch(baseURL, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -42,12 +42,14 @@ document.addEventListener('turbo:load', async function() {
             user,
             user_transacting_wallet
           })
-        });
+      });
         
-
-
-//        window.location.reload();
-
+      const json = await response.json();
+      console.log('Server response: ', json);
+     
+      } catch (e){
+        console.error('Error while removing the transaction: ', e.message);
+      }   
     };
 
     document.querySelectorAll('#pending-transactions button').forEach((button) => {

@@ -5,10 +5,28 @@ class WebhooksController < ApplicationController
   skip_before_action :authenticate_user!, only: [:handle_transaction_data, :handle_created_stream]
   skip_before_action :verify_authenticity_token, only: [:handle_transaction_data, :handle_created_stream]
 
+  def filter_transaction(transaction, key, value)
+    transactions.reject { |transaction| transaction[key] == value }
+  end
+
+
   def handle_processed_transaction
     
     payload = JSON.parse(request.body.read)
 
+    user = User.find_by(id: payload['user']);
+
+    wallet = user.wallets.find_by(wallet_address: payload['user_transacting_wallet'])
+
+    puts "User wallet: #{wallet}"
+
+    wallet.pending_transactions.delete_if do |transaction|
+      transaction["transaction_hash"] == payload['hash']
+    end
+
+    wallet.save
+    
+    render json: {message: 'Data recieved in rails', status: :ok}
 
 
   end
